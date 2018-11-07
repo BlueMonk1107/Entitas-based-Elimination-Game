@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
 public sealed class FillSystem : ReactiveSystem<GameEntity> {
 
@@ -21,6 +22,7 @@ public sealed class FillSystem : ReactiveSystem<GameEntity> {
     }
 
     protected override void Execute(List<GameEntity> entities) {
+        _contexts.game.CreateEntity().AddDebugMsg("Fill");
         var gameBoard = _contexts.game.gameBoard;
         for (int column = 0; column < gameBoard.columns; column++) {
             var position = new IntVector2(column, gameBoard.rows);
