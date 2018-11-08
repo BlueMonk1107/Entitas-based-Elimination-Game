@@ -19,10 +19,10 @@ public class View : MonoBehaviour, IView, IPositionListener, IDestroyedListener 
     }
 
     public virtual void OnDestroyed(GameEntity entity) {
-        destroy();
+        Destroy();
     }
 
-    protected virtual void destroy() {
+    protected virtual void Destroy() {
         gameObject.Unlink();
         Destroy(gameObject);
     }

@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Entitas;
+using UnityEngine;
 
+/// <summary>
+/// 负责元素的下落移动
+/// </summary>
 public sealed class FallSystem : ReactiveSystem<GameEntity> {
 
     public GameBoardService gameBoardService = GameBoardService.singleton;
@@ -21,22 +25,29 @@ public sealed class FallSystem : ReactiveSystem<GameEntity> {
     }
 
     protected override void Execute(List<GameEntity> entities) {
+        //每个元素检测自己是否能动
+        //能动，就检测下一个元素的位置是否为空
+        //为空就向下移动
         var gameBoard = _contexts.game.gameBoard;
-        for (int column = 0; column < gameBoard.columns; column++) {
-            for (int row = 1; row < gameBoard.rows; row++) {
+        for (int column = 0; column < gameBoard.columns; column++)
+        {
+            for (int row = 1; row < gameBoard.rows; row++)
+            {
+                //isMovable标记物体是否可移动
                 var position = new IntVector2(column, row);
                 var movables = _contexts.game.GetEntitiesWithPosition(position)
                     .Where(e => e.isMovable)
                     .ToArray();
 
-                foreach (var e in movables) {
-                    moveDown(e, position);
+                foreach (var e in movables)
+                {
+                    MoveDown(e, position);
                 }
             }
         }
     }
 
-    void moveDown(GameEntity e, IntVector2 position) {
+    void MoveDown(GameEntity e, IntVector2 position) {
         var nextRowPos = gameBoardService.GetNextEmptyRow(position);
         if (nextRowPos != position.y) {
             e.ReplacePosition(new IntVector2(position.x, nextRowPos));

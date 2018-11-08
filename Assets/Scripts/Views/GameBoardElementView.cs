@@ -15,12 +15,12 @@ public class GameBoardElementView : View {
         transform.DOMove(new Vector3(value.x, value.y, 0f), 0.3f);
     }
 
-    protected override void destroy() {
+    protected override void Destroy() {
         var color = sprite.color;
         color.a = 0f;
         sprite.material.DOColor(color, destroyDuration);
         gameObject.transform
             .DOScale(Vector3.one * 1.5f, destroyDuration)
-            .OnComplete(base.destroy);
+            .OnComplete(base.Destroy);
     }
 }

@@ -13,7 +13,9 @@ public sealed class GameBoardSystem : ReactiveSystem<GameEntity>, IInitializeSys
     }
 
     public void Initialize() {
+        //初始化游戏面板数据
         var gameBoard = entityService.CreateGameBoard().gameBoard;
+        //根据策略 选择生成障碍 还是 元素
         for (int row = 0; row < gameBoard.rows; row++) {
             for (int column = 0; column < gameBoard.columns; column++) {
                 if (randomService.Bool(0.1f)) {
