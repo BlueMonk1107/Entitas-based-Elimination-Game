@@ -13,14 +13,18 @@ public class GameBoardService {
 
     public int GetNextEmptyRow(IntVector2 position) {
         position.y -= 1;
-        while (position.y >= 0 && (_contexts.game.GetEntitiesWithPosition(position).Count == 0 || !_contexts.game.GetEntitiesWithPosition(position).ToArray()[0].isMovable)) {
+        var entities = _contexts.game.GetEntitiesWithPosition(position).ToArray();
+        while (position.y >= 0 && (entities.Length == 0 || !entities[0].isMovable)) {
             position.y -= 1;
+            entities = _contexts.game.GetEntitiesWithPosition(position).ToArray();
         }
 
         position.y += 1;
-        while (position.y < _contexts.game.gameBoard.rows && _contexts.game.GetEntitiesWithPosition(position).Count != 0 && !_contexts.game.GetEntitiesWithPosition(position).ToArray()[0].isMovable)
+        entities = _contexts.game.GetEntitiesWithPosition(position).ToArray();
+        while (position.y < _contexts.game.gameBoard.rows && entities.Length != 0 && !entities[0].isMovable)
         {
             position.y += 1;
+            entities = _contexts.game.GetEntitiesWithPosition(position).ToArray();
         }
         return position.y;
     }

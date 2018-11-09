@@ -28,6 +28,7 @@ public sealed class FallSystem : ReactiveSystem<GameEntity> {
         //每个元素检测自己是否能动
         //能动，就检测下一个元素的位置是否为空
         //为空就向下移动
+        //只负责已有元素的移动，新生成元素的移动不在这里
         var gameBoard = _contexts.game.gameBoard;
         for (int column = 0; column < gameBoard.columns; column++)
         {
