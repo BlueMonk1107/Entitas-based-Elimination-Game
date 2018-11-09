@@ -19,7 +19,7 @@ public class GameBoardElementView : View
             transform.localPosition = new Vector3(value.x, value.y + 1);
         }
 
-        transform.DOMove(new Vector3(target.x, target.y, 0f), 0.3f);
+        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f);
     }
     //计算有效的顶点元素坐标
     private IntVector2 ValidTop(IntVector2 value)
