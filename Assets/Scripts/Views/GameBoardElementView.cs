@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Entitas;
 using Entitas.Unity;
 using UnityEngine;
 
-public class GameBoardElementView : View,IChangeListener,ISlideListener
+public class GameBoardElementView : View, IChangeListener, ISlideListener
 {
 
     public SpriteRenderer sprite;
@@ -13,9 +14,8 @@ public class GameBoardElementView : View,IChangeListener,ISlideListener
 
     public override void Link(IEntity entity, IContext context)
     {
-        base.Link(entity,context);
-        var e = (GameEntity)entity;
-        e.AddChangeListener(this);
+        base.Link(entity, context);
+        _thisGameEntity.AddChangeListener(this);
     }
 
     public override void OnPosition(GameEntity entity, IntVector2 value)
@@ -23,14 +23,94 @@ public class GameBoardElementView : View,IChangeListener,ISlideListener
         IntVector2 target = value;
         value = ValidTop(value);
 
-        var isTopRow = value.y == Contexts.sharedInstance.game.gameBoard.rows - 1;
-        if (isTopRow)
+        //var isTopRow = value.y == Contexts.sharedInstance.game.gameBoard.rows - 1;
+        //if (isTopRow)
+        //{
+        //    transform.localPosition = new Vector3(value.x, value.y + 1);
+        //}
+
+        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(JudgeSameColor);
+    }
+    //判断同颜色元素
+    private void JudgeSameColor()
+    {
+        List<GameEntity> sameColorItemsHor = JudgeHorizontal();
+        if (sameColorItemsHor.Count > 2)
         {
-            transform.localPosition = new Vector3(value.x, value.y + 1);
+            foreach (GameEntity entity in sameColorItemsHor)
+            {
+                entity.isDestroyed = true;
+            }
         }
 
-        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f);
+        List<GameEntity> sameColorItemsVer = JudgeVertical();
+        if (sameColorItemsVer.Count > 2)
+        {
+            foreach (GameEntity entity in sameColorItemsVer)
+            {
+                entity.isDestroyed = true;
+            }
+        }
     }
+    //判断横向同颜色元素
+    private List<GameEntity> JudgeHorizontal()
+    {
+        string colorName = _thisGameEntity.asset.value;
+        IntVector2 thisPos = _thisGameEntity.position.value;
+        List<GameEntity> sameColorItems = new List<GameEntity>();
+        for (int i = thisPos.x; i >= 0; i--)
+        {
+            if(!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
+                break;
+        }
+
+        for (int i = thisPos.x + 1; i < Contexts.sharedInstance.game.gameBoard.columns; i++)
+        {
+            if (!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
+                break;
+        }
+
+        return sameColorItems;
+    }
+    //判断纵向同颜色元素
+    private List<GameEntity> JudgeVertical()
+    {
+        string colorName = _thisGameEntity.asset.value;
+        IntVector2 thisPos = _thisGameEntity.position.value;
+        List<GameEntity> sameColorItems = new List<GameEntity>();
+        for (int i = thisPos.y; i >= 0; i--)
+        {
+            if (!AddSameColorItem(sameColorItems, thisPos.x, i, colorName))
+                break;
+        }
+
+        for (int i = thisPos.y + 1; i < Contexts.sharedInstance.game.gameBoard.rows; i++)
+        {
+            if (!AddSameColorItem(sameColorItems, thisPos.x, i, colorName))
+                break;
+        }
+
+        return sameColorItems;
+    }
+    //添加同颜色相邻元素
+    private bool AddSameColorItem(List<GameEntity> sameColorItems,int x,int y,string colorName)
+    {
+        GameEntity targetEntity = Contexts.sharedInstance.game.GetEntitiesWithPosition(new IntVector2(x, y)).SingleEntity();
+
+        if (!targetEntity.isMovable)
+            return false;
+
+        if (targetEntity.asset.value == colorName)
+        {
+            sameColorItems.Add(targetEntity);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     //计算有效的顶点元素坐标
     private IntVector2 ValidTop(IntVector2 value)
     {
@@ -61,18 +141,7 @@ public class GameBoardElementView : View,IChangeListener,ISlideListener
 
     public void OnChange(GameEntity entity, IntVector2 firstPos, IntVector2 secondPos)
     {
-        GameEntity thisEntity = gameObject.GetEntityLink().entity as GameEntity;
-        if(thisEntity == null) 
-            return;
-
-        if (transform.position.x == firstPos.x && transform.position.y == firstPos.y)
-        {
-            thisEntity.ReplacePosition(secondPos);
-        }
-        else
-        {
-            thisEntity.ReplacePosition(firstPos);
-        }
-        
+        if (_thisGameEntity != null)
+            _thisGameEntity.ReplacePosition(_thisGameEntity.position.value.Equals(firstPos) ? secondPos : firstPos);
     }
 }

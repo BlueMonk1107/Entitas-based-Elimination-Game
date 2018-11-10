@@ -33,7 +33,7 @@ public sealed class FillSystem : ReactiveSystem<GameEntity>
         var gameBoard = _contexts.game.gameBoard;
         for (int column = 0; column < gameBoard.columns; column++)
         {
-            var position = new IntVector2(column, gameBoard.rows);
+            var position = new IntVector2(column, gameBoard.rows + 1);
             var nextRowPos = gameBoardService.GetNextEmptyRow(position);
             while (nextRowPos != gameBoard.rows)
             {

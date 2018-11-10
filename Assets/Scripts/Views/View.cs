@@ -2,15 +2,17 @@
 using Entitas.Unity;
 using UnityEngine;
 
-public class View : MonoBehaviour, IView, IPositionListener, IDestroyedListener {
+public class View : MonoBehaviour, IView, IPositionListener, IDestroyedListener
+{
+    protected GameEntity _thisGameEntity;
 
     public virtual void Link(IEntity entity, IContext context) {
         gameObject.Link(entity, context);
-        var e = (GameEntity)entity;
-        e.AddPositionListener(this);
-        e.AddDestroyedListener(this);
+        _thisGameEntity = (GameEntity)entity;
+        _thisGameEntity.AddPositionListener(this);
+        _thisGameEntity.AddDestroyedListener(this);
 
-        var pos = e.position.value;
+        var pos = _thisGameEntity.position.value;
         transform.localPosition = new Vector3(pos.x, pos.y);
     }
 
