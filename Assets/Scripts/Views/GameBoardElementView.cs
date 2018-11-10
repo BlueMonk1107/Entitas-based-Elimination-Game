@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using DG.Tweening;
 using Entitas;
 using Entitas.Unity;
@@ -8,14 +9,18 @@ using UnityEngine;
 
 public class GameBoardElementView : View, IChangeListener, ISlideListener
 {
-
     public SpriteRenderer sprite;
     public float destroyDuration;
+    private IntVector2 _lastPos;
+    private static int _changeTimes;
+    private ChangeState _changeState;
 
     public override void Link(IEntity entity, IContext context)
     {
         base.Link(entity, context);
         _thisGameEntity.AddChangeListener(this);
+        _lastPos = new IntVector2(-1, -1);
+        _changeState = ChangeState.NONE;
     }
 
     public override void OnPosition(GameEntity entity, IntVector2 value)
@@ -29,11 +34,38 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
         //    transform.localPosition = new Vector3(value.x, value.y + 1);
         //}
 
-        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(JudgeSameColor);
+        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(() =>
+        {
+            bool hasSameColor = JudgeSameColor();
+            if (_changeState == ChangeState.START)
+            {
+                _changeTimes++;
+                if (_changeTimes == 2)
+                {
+                    _changeTimes = 0;
+                    
+                    if (!hasSameColor && _lastPos.x >= 0 && _lastPos.y >= 0)
+                    {
+                        var e = Contexts.sharedInstance.game.GetEntitiesWithPosition(_lastPos).Single();
+                        e.ReplacePosition(_thisGameEntity.position.value);
+                        _thisGameEntity.ReplacePosition(_lastPos);
+                        _lastPos = new IntVector2(-1, -1);
+                    }
+                    else
+                    {
+                        _lastPos = new IntVector2(-1, -1);
+                    }
+                }
+                _changeState = ChangeState.END;
+            }
+        });
+
+        
     }
     //判断同颜色元素
-    private void JudgeSameColor()
+    private bool JudgeSameColor()
     {
+        bool success = false;
         List<GameEntity> sameColorItemsHor = JudgeHorizontal();
         if (sameColorItemsHor.Count > 2)
         {
@@ -41,6 +73,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
             {
                 entity.isDestroyed = true;
             }
+            success = true;
         }
 
         List<GameEntity> sameColorItemsVer = JudgeVertical();
@@ -50,7 +83,10 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
             {
                 entity.isDestroyed = true;
             }
+            success = true;
         }
+
+        return success;
     }
     //判断横向同颜色元素
     private List<GameEntity> JudgeHorizontal()
@@ -60,7 +96,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
         List<GameEntity> sameColorItems = new List<GameEntity>();
         for (int i = thisPos.x; i >= 0; i--)
         {
-            if(!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
+            if (!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
                 break;
         }
 
@@ -93,9 +129,9 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
         return sameColorItems;
     }
     //添加同颜色相邻元素
-    private bool AddSameColorItem(List<GameEntity> sameColorItems,int x,int y,string colorName)
+    private bool AddSameColorItem(List<GameEntity> sameColorItems, int x, int y, string colorName)
     {
-        GameEntity targetEntity = Contexts.sharedInstance.game.GetEntitiesWithPosition(new IntVector2(x, y)).SingleEntity();
+        var targetEntity = Contexts.sharedInstance.game.GetEntitiesWithPosition(new IntVector2(x, y)).Single();
 
         if (!targetEntity.isMovable)
             return false;
@@ -142,6 +178,10 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
     public void OnChange(GameEntity entity, IntVector2 firstPos, IntVector2 secondPos)
     {
         if (_thisGameEntity != null)
+        {
+            _changeState = ChangeState.START;
+            _lastPos = _thisGameEntity.position.value;
             _thisGameEntity.ReplacePosition(_thisGameEntity.position.value.Equals(firstPos) ? secondPos : firstPos);
+        }
     }
 }
