@@ -26,4 +26,13 @@ public struct IntVector2 : IEquatable<IntVector2> {
     public override int GetHashCode() {
         return (x << 8) + y;
     }
+
+    /// <summary>
+    /// 自定义默认值
+    /// </summary>
+    /// <returns></returns>
+    public static IntVector2 DefaultValue()
+    {
+        return new IntVector2(-1,-1);
+    }
 }

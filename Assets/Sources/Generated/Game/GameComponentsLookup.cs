@@ -15,14 +15,16 @@ public static class GameComponentsLookup {
     public const int DebugMsg = 4;
     public const int Destroyed = 5;
     public const int DestroyedListener = 6;
-    public const int GameBoard = 7;
-    public const int GameBoardElement = 8;
-    public const int Interactive = 9;
-    public const int Movable = 10;
-    public const int Position = 11;
-    public const int PositionListener = 12;
+    public const int DetectionSameItem = 7;
+    public const int Eliminate = 8;
+    public const int GameBoard = 9;
+    public const int GameBoardElement = 10;
+    public const int Interactive = 11;
+    public const int Movable = 12;
+    public const int Position = 13;
+    public const int PositionListener = 14;
 
-    public const int TotalComponents = 13;
+    public const int TotalComponents = 15;
 
     public static readonly string[] componentNames = {
         "Asset",
@@ -32,6 +34,8 @@ public static class GameComponentsLookup {
         "DebugMsg",
         "Destroyed",
         "DestroyedListener",
+        "DetectionSameItem",
+        "Eliminate",
         "GameBoard",
         "GameBoardElement",
         "Interactive",
@@ -48,6 +52,8 @@ public static class GameComponentsLookup {
         typeof(DebugMsgComponent),
         typeof(DestroyedComponent),
         typeof(DestroyedListenerComponent),
+        typeof(DetectionSameItemComponent),
+        typeof(EliminateComponent),
         typeof(GameBoardComponent),
         typeof(GameBoardElementComponent),
         typeof(InteractiveComponent),

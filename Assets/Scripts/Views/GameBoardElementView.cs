@@ -19,7 +19,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
     {
         base.Link(entity, context);
         _thisGameEntity.AddChangeListener(this);
-        _lastPos = new IntVector2(-1, -1);
+        _lastPos = IntVector2.DefaultValue();
         _changeState = ChangeState.NONE;
     }
 
@@ -36,57 +36,62 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
 
         transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(() =>
         {
-            bool hasSameColor = JudgeSameColor();
+            _thisGameEntity.ReplaceDetectionSameItem(JudgeSameColor());
+            _thisGameEntity.ReplaceEliminate(_thisGameEntity.detectionSameItem.sameEntities.Count > 2);
+
             if (_changeState == ChangeState.START)
             {
+                var e = Contexts.sharedInstance.game.GetEntitiesWithPosition(_lastPos).Single();
                 _changeTimes++;
                 if (_changeTimes == 2)
                 {
                     _changeTimes = 0;
-                    
-                    if (!hasSameColor && _lastPos.x >= 0 && _lastPos.y >= 0)
+
+                    if (!_thisGameEntity.eliminate.canEliminate && !e.eliminate.canEliminate && _lastPos.x >= 0 && _lastPos.y >= 0)
                     {
-                        var e = Contexts.sharedInstance.game.GetEntitiesWithPosition(_lastPos).Single();
                         e.ReplacePosition(_thisGameEntity.position.value);
                         _thisGameEntity.ReplacePosition(_lastPos);
-                        _lastPos = new IntVector2(-1, -1);
+                        _lastPos = IntVector2.DefaultValue();
                     }
                     else
                     {
-                        _lastPos = new IntVector2(-1, -1);
+                        _lastPos = IntVector2.DefaultValue();
                     }
                 }
                 _changeState = ChangeState.END;
             }
+            
+            if (_thisGameEntity.eliminate.canEliminate)
+            {
+                Eliminate(_thisGameEntity.detectionSameItem.sameEntities);
+            }
         });
 
-        
+
     }
-    //判断同颜色元素
-    private bool JudgeSameColor()
+
+    private void Eliminate(List<IEntity> sameEntities)
     {
-        bool success = false;
-        List<GameEntity> sameColorItemsHor = JudgeHorizontal();
-        if (sameColorItemsHor.Count > 2)
+        if (sameEntities != null && sameEntities.Count > 2)
         {
-            foreach (GameEntity entity in sameColorItemsHor)
+            GameEntity temp;
+            foreach (IEntity e in sameEntities)
             {
-                entity.isDestroyed = true;
+                temp = e as GameEntity;
+                if (temp != null) temp.isDestroyed = true;
             }
-            success = true;
         }
+    }
 
-        List<GameEntity> sameColorItemsVer = JudgeVertical();
-        if (sameColorItemsVer.Count > 2)
-        {
-            foreach (GameEntity entity in sameColorItemsVer)
-            {
-                entity.isDestroyed = true;
-            }
-            success = true;
-        }
+    //判断同颜色元素
+    private List<IEntity> JudgeSameColor()
+    {
+        List<IEntity> sameColorItem = new List<IEntity>();
+        sameColorItem.AddRange(JudgeHorizontal());
+        sameColorItem.AddRange(JudgeVertical());
+        sameColorItem.Add(_thisGameEntity);
 
-        return success;
+        return sameColorItem;
     }
     //判断横向同颜色元素
     private List<GameEntity> JudgeHorizontal()
@@ -94,7 +99,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
         string colorName = _thisGameEntity.asset.value;
         IntVector2 thisPos = _thisGameEntity.position.value;
         List<GameEntity> sameColorItems = new List<GameEntity>();
-        for (int i = thisPos.x; i >= 0; i--)
+        for (int i = thisPos.x -1; i >= 0; i--)
         {
             if (!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
                 break;
@@ -114,7 +119,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
         string colorName = _thisGameEntity.asset.value;
         IntVector2 thisPos = _thisGameEntity.position.value;
         List<GameEntity> sameColorItems = new List<GameEntity>();
-        for (int i = thisPos.y; i >= 0; i--)
+        for (int i = thisPos.y -1; i >= 0; i--)
         {
             if (!AddSameColorItem(sameColorItems, thisPos.x, i, colorName))
                 break;
