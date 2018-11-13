@@ -31,31 +31,39 @@ public sealed class InputSystem : ReactiveSystem<InputEntity>, ICleanupSystem
     {
         var inputEntity = entities.SingleEntity();
         var input = inputEntity.input;
+        bool canMove = _contexts.game.GetEntitiesWithPosition(new IntVector2(input.x, input.y)).SingleEntity().isMovable;
 
-        if (_lastInputComponent != null)
+        if (canMove)
         {
-            if ((input.x == _lastInputComponent.x - 1 && input.y == _lastInputComponent.y)
-              || (input.x == _lastInputComponent.x + 1 && input.y == _lastInputComponent.y)
-              || (input.y == _lastInputComponent.y - 1 && input.x == _lastInputComponent.x)
-              || (input.y == _lastInputComponent.y + 1 && input.x == _lastInputComponent.x))
+            if (_lastInputComponent != null)
             {
-                ReplaceChange(input, input);
-                ReplaceChange(input, _lastInputComponent);
-                _lastInputComponent = null;
+                //检测当前操作的是否是上下左右四个点中的一个
+                if ((input.x == _lastInputComponent.x - 1 && input.y == _lastInputComponent.y)
+                  || (input.x == _lastInputComponent.x + 1 && input.y == _lastInputComponent.y)
+                  || (input.y == _lastInputComponent.y - 1 && input.x == _lastInputComponent.x)
+                  || (input.y == _lastInputComponent.y + 1 && input.x == _lastInputComponent.x))
+                {
+                    ReplaceChange(input, input);
+                    ReplaceChange(input, _lastInputComponent);
+                    _lastInputComponent = null;
+                }
+            }
+            else
+            {
+                _lastInputComponent = new InputComponent();
+            }
+
+            if (_lastInputComponent != null)
+            {
+                _lastInputComponent.x = input.x;
+                _lastInputComponent.y = input.y;
             }
         }
-        else
-        {
-            _lastInputComponent = new InputComponent();
-        }
-
-        if (_lastInputComponent != null)
-        {
-            _lastInputComponent.x = input.x;
-            _lastInputComponent.y = input.y;
-        }
+       
     }
 
+    //执行后，交换两个相邻元素的位置
+    //参数一：第二次点击的元素的组件 参数二：当前要操作的组件
     private void ReplaceChange(InputComponent input, InputComponent currentInput)
     {
         foreach (var e in _contexts.game.GetEntitiesWithPosition(new IntVector2(currentInput.x, currentInput.y)).Where(e => e.isInteractive))

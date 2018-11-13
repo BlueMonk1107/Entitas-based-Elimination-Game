@@ -47,7 +47,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
                 {
                     _changeTimes = 0;
 
-                    if (!_thisGameEntity.eliminate.canEliminate && !e.eliminate.canEliminate && _lastPos.x >= 0 && _lastPos.y >= 0)
+                    if (!_thisGameEntity.eliminate.canEliminate && !e.eliminate.canEliminate)
                     {
                         e.ReplacePosition(_thisGameEntity.position.value);
                         _thisGameEntity.ReplacePosition(_lastPos);
@@ -93,6 +93,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
 
         return sameColorItem;
     }
+
     //判断横向同颜色元素
     private List<GameEntity> JudgeHorizontal()
     {
@@ -113,6 +114,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
 
         return sameColorItems;
     }
+
     //判断纵向同颜色元素
     private List<GameEntity> JudgeVertical()
     {
@@ -133,6 +135,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
 
         return sameColorItems;
     }
+
     //添加同颜色相邻元素
     private bool AddSameColorItem(List<GameEntity> sameColorItems, int x, int y, string colorName)
     {
