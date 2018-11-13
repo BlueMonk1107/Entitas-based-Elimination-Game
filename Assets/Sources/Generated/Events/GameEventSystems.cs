@@ -12,6 +12,6 @@ public sealed class GameEventSystems : Feature {
         Add(new AssetEventSystem(contexts)); // priority: 0
         Add(new ChangeEventSystem(contexts)); // priority: 0
         Add(new DestroyedEventSystem(contexts)); // priority: 0
-        Add(new PositionEventSystem(contexts)); // priority: 0
+        Add(new MoveEventSystem(contexts)); // priority: 0
     }
 }

@@ -36,10 +36,11 @@ public sealed class FillSystem : ReactiveSystem<GameEntity>
         {
             var position = new IntVector2(column, gameBoard.rows + 1);
             var rowPosMin = gameBoardService.GetNextEmptyRow(position);
-
+            GameEntity temp = null;
             for (int i = rowPosMin; i < gameBoard.rows; i++)
             {
-                entityService.CreateRandomPiece(column, i);
+                temp = entityService.CreateRandomPiece(column, i);
+                temp.ReplaceMove(temp.position.value);
             }
         }
     }

@@ -6,6 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IPositionListener {
-    void OnPosition(GameEntity entity, IntVector2 value);
+public interface IMoveListener {
+    void OnMove(GameEntity entity, IntVector2 target);
 }

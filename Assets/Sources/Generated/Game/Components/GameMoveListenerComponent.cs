@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public PositionListenerComponent positionListener { get { return (PositionListenerComponent)GetComponent(GameComponentsLookup.PositionListener); } }
-    public bool hasPositionListener { get { return HasComponent(GameComponentsLookup.PositionListener); } }
+    public MoveListenerComponent moveListener { get { return (MoveListenerComponent)GetComponent(GameComponentsLookup.MoveListener); } }
+    public bool hasMoveListener { get { return HasComponent(GameComponentsLookup.MoveListener); } }
 
-    public void AddPositionListener(System.Collections.Generic.List<IPositionListener> newValue) {
-        var index = GameComponentsLookup.PositionListener;
-        var component = CreateComponent<PositionListenerComponent>(index);
+    public void AddMoveListener(System.Collections.Generic.List<IMoveListener> newValue) {
+        var index = GameComponentsLookup.MoveListener;
+        var component = CreateComponent<MoveListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplacePositionListener(System.Collections.Generic.List<IPositionListener> newValue) {
-        var index = GameComponentsLookup.PositionListener;
-        var component = CreateComponent<PositionListenerComponent>(index);
+    public void ReplaceMoveListener(System.Collections.Generic.List<IMoveListener> newValue) {
+        var index = GameComponentsLookup.MoveListener;
+        var component = CreateComponent<MoveListenerComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
-    public void RemovePositionListener() {
-        RemoveComponent(GameComponentsLookup.PositionListener);
+    public void RemoveMoveListener() {
+        RemoveComponent(GameComponentsLookup.MoveListener);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherPositionListener;
+    static Entitas.IMatcher<GameEntity> _matcherMoveListener;
 
-    public static Entitas.IMatcher<GameEntity> PositionListener {
+    public static Entitas.IMatcher<GameEntity> MoveListener {
         get {
-            if (_matcherPositionListener == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.PositionListener);
+            if (_matcherMoveListener == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MoveListener);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherPositionListener = matcher;
+                _matcherMoveListener = matcher;
             }
 
-            return _matcherPositionListener;
+            return _matcherMoveListener;
         }
     }
 }
@@ -65,21 +65,21 @@ public sealed partial class GameMatcher {
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public void AddPositionListener(IPositionListener value) {
-        var listeners = hasPositionListener
-            ? positionListener.value
-            : new System.Collections.Generic.List<IPositionListener>();
+    public void AddMoveListener(IMoveListener value) {
+        var listeners = hasMoveListener
+            ? moveListener.value
+            : new System.Collections.Generic.List<IMoveListener>();
         listeners.Add(value);
-        ReplacePositionListener(listeners);
+        ReplaceMoveListener(listeners);
     }
 
-    public void RemovePositionListener(IPositionListener value, bool removeComponentWhenEmpty = true) {
-        var listeners = positionListener.value;
+    public void RemoveMoveListener(IMoveListener value, bool removeComponentWhenEmpty = true) {
+        var listeners = moveListener.value;
         listeners.Remove(value);
         if (removeComponentWhenEmpty && listeners.Count == 0) {
-            RemovePositionListener();
+            RemoveMoveListener();
         } else {
-            ReplacePositionListener(listeners);
+            ReplaceMoveListener(listeners);
         }
     }
 }

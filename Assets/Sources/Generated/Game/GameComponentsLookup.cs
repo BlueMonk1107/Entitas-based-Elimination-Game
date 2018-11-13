@@ -21,10 +21,11 @@ public static class GameComponentsLookup {
     public const int GameBoardElement = 10;
     public const int Interactive = 11;
     public const int Movable = 12;
-    public const int Position = 13;
-    public const int PositionListener = 14;
+    public const int Move = 13;
+    public const int MoveListener = 14;
+    public const int Position = 15;
 
-    public const int TotalComponents = 15;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "Asset",
@@ -40,8 +41,9 @@ public static class GameComponentsLookup {
         "GameBoardElement",
         "Interactive",
         "Movable",
-        "Position",
-        "PositionListener"
+        "Move",
+        "MoveListener",
+        "Position"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -58,7 +60,8 @@ public static class GameComponentsLookup {
         typeof(GameBoardElementComponent),
         typeof(InteractiveComponent),
         typeof(MovableComponent),
-        typeof(PositionComponent),
-        typeof(PositionListenerComponent)
+        typeof(MoveComponent),
+        typeof(MoveListenerComponent),
+        typeof(PositionComponent)
     };
 }

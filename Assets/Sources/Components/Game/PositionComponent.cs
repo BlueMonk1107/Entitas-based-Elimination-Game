@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-[Event(EventTarget.Self)]
+[Game]
 public sealed class PositionComponent : IComponent {
 
     [EntityIndex]

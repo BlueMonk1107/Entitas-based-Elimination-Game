@@ -6,31 +6,31 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class PositionEventSystem : Entitas.ReactiveSystem<GameEntity> {
+public sealed class MoveEventSystem : Entitas.ReactiveSystem<GameEntity> {
 
-    readonly System.Collections.Generic.List<IPositionListener> _listenerBuffer;
+    readonly System.Collections.Generic.List<IMoveListener> _listenerBuffer;
 
-    public PositionEventSystem(Contexts contexts) : base(contexts.game) {
-        _listenerBuffer = new System.Collections.Generic.List<IPositionListener>();
+    public MoveEventSystem(Contexts contexts) : base(contexts.game) {
+        _listenerBuffer = new System.Collections.Generic.List<IMoveListener>();
     }
 
     protected override Entitas.ICollector<GameEntity> GetTrigger(Entitas.IContext<GameEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.Added(GameMatcher.Position)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(GameMatcher.Move)
         );
     }
 
     protected override bool Filter(GameEntity entity) {
-        return entity.hasPosition && entity.hasPositionListener;
+        return entity.hasMove && entity.hasMoveListener;
     }
 
     protected override void Execute(System.Collections.Generic.List<GameEntity> entities) {
         foreach (var e in entities) {
-            var component = e.position;
+            var component = e.move;
             _listenerBuffer.Clear();
-            _listenerBuffer.AddRange(e.positionListener.value);
+            _listenerBuffer.AddRange(e.moveListener.value);
             foreach (var listener in _listenerBuffer) {
-                listener.OnPosition(e, component.value);
+                listener.OnMove(e, component.target);
             }
         }
     }

@@ -51,7 +51,7 @@ public sealed class FallSystem : ReactiveSystem<GameEntity> {
     void MoveDown(GameEntity e, IntVector2 position) {
         var nextRowPos = gameBoardService.GetNextEmptyRow(position);
         if (nextRowPos != position.y) {
-            e.ReplacePosition(new IntVector2(position.x, nextRowPos));
+            e.ReplaceMove(new IntVector2(position.x, nextRowPos));
         }
     }
 }

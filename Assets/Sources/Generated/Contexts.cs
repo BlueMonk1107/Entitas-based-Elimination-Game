@@ -62,6 +62,7 @@ public partial class Contexts {
 
     public const string ChangeFirstPos = "ChangeFirstPos";
     public const string ChangeSecondPos = "ChangeSecondPos";
+    public const string Move = "Move";
     public const string Position = "Position";
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
@@ -75,6 +76,11 @@ public partial class Contexts {
             ChangeSecondPos,
             game.GetGroup(GameMatcher.Change),
             (e, c) => ((ChangeComponent)c).secondPos));
+
+        game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, IntVector2>(
+            Move,
+            game.GetGroup(GameMatcher.Move),
+            (e, c) => ((MoveComponent)c).target));
 
         game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, IntVector2>(
             Position,
@@ -91,6 +97,10 @@ public static class ContextsExtensions {
 
     public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithChangeSecondPos(this GameContext context, IntVector2 secondPos) {
         return ((Entitas.EntityIndex<GameEntity, IntVector2>)context.GetEntityIndex(Contexts.ChangeSecondPos)).GetEntities(secondPos);
+    }
+
+    public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithMove(this GameContext context, IntVector2 target) {
+        return ((Entitas.EntityIndex<GameEntity, IntVector2>)context.GetEntityIndex(Contexts.Move)).GetEntities(target);
     }
 
     public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithPosition(this GameContext context, IntVector2 value) {

@@ -16,13 +16,15 @@ public sealed class GameBoardSystem : ReactiveSystem<GameEntity>, IInitializeSys
         //初始化游戏面板数据
         var gameBoard = entityService.CreateGameBoard().gameBoard;
         //根据策略 选择生成障碍 还是 元素
+        GameEntity temp = null;
         for (int row = 0; row < gameBoard.rows; row++) {
             for (int column = 0; column < gameBoard.columns; column++) {
                 if (randomService.Bool(0.1f)) {
-                    entityService.CreateBlocker(column, row);
+                    temp = entityService.CreateBlocker(column, row);
                 } else {
-                    entityService.CreateRandomPiece(column, row);
+                    temp = entityService.CreateRandomPiece(column, row);
                 }
+                temp.ReplaceMove(temp.position.value);
             }
         }
     }
