@@ -21,19 +21,13 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
         _thisGameEntity.AddChangeListener(this);
         _lastPos = IntVector2.DefaultValue();
         _changeState = ChangeState.NONE;
+        transform.position = new Vector3(_thisGameEntity.position.value.x, Contexts.sharedInstance.game.gameBoard.rows,0);
     }
 
     public override void OnPosition(GameEntity entity, IntVector2 value)
     {
         IntVector2 target = value;
-        value = ValidTop(value);
-
-        //var isTopRow = value.y == Contexts.sharedInstance.game.gameBoard.rows - 1;
-        //if (isTopRow)
-        //{
-        //    transform.localPosition = new Vector3(value.x, value.y + 1);
-        //}
-
+    
         transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(() =>
         {
             _thisGameEntity.ReplaceDetectionSameItem(JudgeSameColor());
@@ -154,20 +148,7 @@ public class GameBoardElementView : View, IChangeListener, ISlideListener
             return false;
         }
     }
-
-    //计算有效的顶点元素坐标
-    private IntVector2 ValidTop(IntVector2 value)
-    {
-        value = new IntVector2(value.x, value.y + 1);
-        var entities = Contexts.sharedInstance.game.GetEntitiesWithPosition(value).ToArray();
-        while (value.y < Contexts.sharedInstance.game.gameBoard.rows && entities.Length != 0 && !entities[0].isMovable)
-        {
-            value = new IntVector2(value.x, value.y + 1);
-            entities = Contexts.sharedInstance.game.GetEntitiesWithPosition(value).ToArray();
-        }
-        return new IntVector2(value.x, value.y - 1);
-    }
-
+    
     protected override void Destroy()
     {
         var color = sprite.color;

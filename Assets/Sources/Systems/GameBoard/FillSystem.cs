@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Entitas;
 using UnityEngine;
 
@@ -34,11 +35,11 @@ public sealed class FillSystem : ReactiveSystem<GameEntity>
         for (int column = 0; column < gameBoard.columns; column++)
         {
             var position = new IntVector2(column, gameBoard.rows + 1);
-            var nextRowPos = gameBoardService.GetNextEmptyRow(position);
-            while (nextRowPos != gameBoard.rows)
+            var rowPosMin = gameBoardService.GetNextEmptyRow(position);
+
+            for (int i = rowPosMin; i < gameBoard.rows; i++)
             {
-                entityService.CreateRandomPiece(column, nextRowPos);
-                nextRowPos = gameBoardService.GetNextEmptyRow(position);
+                entityService.CreateRandomPiece(column, i);
             }
         }
     }
