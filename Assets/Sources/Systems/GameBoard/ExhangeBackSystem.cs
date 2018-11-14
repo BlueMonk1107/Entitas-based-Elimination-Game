@@ -20,14 +20,14 @@ public class ExhangeBackSystem : ReactiveSystem<GameEntity>
         return entity.hasExchange 
             && entity.hasEliminate 
             && !entity.eliminate.canEliminate
-            && entity.exchange.exchangeState == ExchangeState.MOVING;
+            && entity.exchange.exchangeState == ExchangeState.EXCHANGE;
     }
 
     protected override void Execute(List<GameEntity> entities)
     {
         foreach (GameEntity gameEntity in entities)
         {
-            gameEntity.ReplaceExchange(ExchangeState.END);
+            gameEntity.ReplaceExchange(ExchangeState.EXCHANGEBACK);
         }
     }
 }

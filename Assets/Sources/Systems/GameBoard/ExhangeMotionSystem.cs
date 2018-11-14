@@ -19,7 +19,7 @@ public class ExhangeMotionSystem : ReactiveSystem<GameEntity>
     {
         return entity.hasExchange
                && (entity.exchange.exchangeState == ExchangeState.START
-                   || entity.exchange.exchangeState == ExchangeState.END);
+                   || entity.exchange.exchangeState == ExchangeState.EXCHANGEBACK);
     }
 
     protected override void Execute(List<GameEntity> entities)
@@ -36,7 +36,19 @@ public class ExhangeMotionSystem : ReactiveSystem<GameEntity>
         var twoPos = two.move.target;
         one.ReplaceMove(twoPos);
         two.ReplaceMove(onePos);
-        one.exchange.exchangeState = ExchangeState.MOVING;
-        two.exchange.exchangeState = ExchangeState.MOVING;
+        SetState(one);
+        SetState(two);
+    }
+
+    private void SetState(GameEntity entity)
+    {
+        if (entity.exchange.exchangeState == ExchangeState.START)
+        {
+            entity.ReplaceExchange(ExchangeState.EXCHANGE);
+        }
+        else if (entity.exchange.exchangeState == ExchangeState.EXCHANGEBACK)
+        {
+            entity.ReplaceExchange(ExchangeState.END);
+        }
     }
 }

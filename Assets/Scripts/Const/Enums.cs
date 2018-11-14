@@ -14,6 +14,7 @@ public enum ExchangeState
 {
     NONE,
     START,
-    MOVING,
+    EXCHANGE,
+    EXCHANGEBACK,
     END
 }

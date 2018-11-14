@@ -88,21 +88,29 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     //添加同颜色相邻元素
     private bool AddSameColorItem(List<GameEntity> sameColorItems, int x, int y, string colorName)
     {
-        if (Contexts.sharedInstance.game.GetEntitiesWithMove(new IntVector2(x, y)).Count == 0)
-            return false;
-        var targetEntity = Contexts.sharedInstance.game.GetEntitiesWithMove(new IntVector2(x, y)).Single();
-
-        if (!targetEntity.isMovable)
-            return false;
-
-        if (targetEntity.asset.value == colorName)
+        var array = Contexts.sharedInstance.game.GetEntitiesWithMove(new IntVector2(x, y));
+        if (array.Count == 1)
         {
-            sameColorItems.Add(targetEntity);
-            return true;
+            var targetEntity = array.Single();
+
+            if (!targetEntity.isMovable)
+                return false;
+
+            if (targetEntity.asset.value == colorName)
+            {
+                sameColorItems.Add(targetEntity);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
+            Contexts.sharedInstance.game.CreateEntity().ReplaceDebugMsg("坐标 x"+x+" y"+y+" 元素数目错误,数目为："+ array.Count);
             return false;
         }
+
     }
 }

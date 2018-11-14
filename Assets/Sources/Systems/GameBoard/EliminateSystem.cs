@@ -24,21 +24,16 @@ public class EliminateSystem : ReactiveSystem<GameEntity> {
 
     protected override void Execute(List<GameEntity> entities)
     {
+        List<IEntity> sameEntities = new List<IEntity>();
+        GameEntity temp;
         foreach (GameEntity gameEntity in entities)
         {
-            List<IEntity> sameEntities = gameEntity.detectionSameItem.sameEntities;
-            if (sameEntities != null && sameEntities.Count > 2)
+            sameEntities = gameEntity.detectionSameItem.sameEntities;
+
+            foreach (IEntity e in sameEntities)
             {
-                GameEntity temp;
-                foreach (IEntity e in sameEntities)
-                {
-                    temp = e as GameEntity;
-                    if (temp != null) temp.isDestroyed = true;
-                }
-            }
-            else
-            {
-                gameEntity.eliminate.canEliminate = false;
+                temp = e as GameEntity;
+                if (temp != null) temp.isDestroyed = true;
             }
         }
         
