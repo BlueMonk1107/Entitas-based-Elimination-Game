@@ -10,9 +10,10 @@ public enum SlideDirection
     DOWN
 }
 
-public enum ChangeState
+public enum ExchangeState
 {
     NONE,
     START,
+    MOVING,
     END
 }

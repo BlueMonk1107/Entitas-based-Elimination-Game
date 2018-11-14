@@ -31,16 +31,23 @@ public sealed class FillSystem : ReactiveSystem<GameEntity>
 
     protected override void Execute(List<GameEntity> entities)
     {
+        //foreach (GameEntity gameEntity in entities)
+        //{
+        //    if(!gameEntity.hasPosition)
+        //        continue;
+        //    var rowPos = gameBoardService.GetNextEmptyRow(gameEntity.position.value);
+        //    var temp = entityService.CreateRandomPiece(gameEntity.position.value.x, rowPos);
+        //    temp.ReplaceMove(temp.position.value);
+        //}
+
         var gameBoard = _contexts.game.gameBoard;
         for (int column = 0; column < gameBoard.columns; column++)
         {
             var position = new IntVector2(column, gameBoard.rows + 1);
             var rowPosMin = gameBoardService.GetNextEmptyRow(position);
-            GameEntity temp = null;
             for (int i = rowPosMin; i < gameBoard.rows; i++)
             {
-                temp = entityService.CreateRandomPiece(column, i);
-                temp.ReplaceMove(temp.position.value);
+                entityService.CreateRandomPiece(column, i);
             }
         }
     }

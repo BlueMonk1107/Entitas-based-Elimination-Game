@@ -19,7 +19,7 @@ public class GameBoardService
         int row = position.y;
         for (int i = position.y - 1; i >= 0; i--)
         {
-            var entities = _contexts.game.GetEntitiesWithPosition(new IntVector2(position.x,i)).ToArray();
+            var entities = _contexts.game.GetEntitiesWithMove(new IntVector2(position.x,i)).ToArray();
 
             if (entities.Length == 0)
             {

@@ -36,6 +36,10 @@ public class EliminateSystem : ReactiveSystem<GameEntity> {
                     if (temp != null) temp.isDestroyed = true;
                 }
             }
+            else
+            {
+                gameEntity.eliminate.canEliminate = false;
+            }
         }
         
     }

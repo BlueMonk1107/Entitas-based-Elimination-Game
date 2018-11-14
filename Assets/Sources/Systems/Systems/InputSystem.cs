@@ -31,7 +31,7 @@ public sealed class InputSystem : ReactiveSystem<InputEntity>, ICleanupSystem
     {
         var inputEntity = entities.SingleEntity();
         var input = inputEntity.input;
-        bool canMove = _contexts.game.GetEntitiesWithPosition(new IntVector2(input.x, input.y)).SingleEntity().isMovable;
+        bool canMove = _contexts.game.GetEntitiesWithMove(new IntVector2(input.x, input.y)).SingleEntity().isMovable;
 
         if (canMove)
         {
@@ -43,8 +43,8 @@ public sealed class InputSystem : ReactiveSystem<InputEntity>, ICleanupSystem
                   || (input.y == _lastInputComponent.y - 1 && input.x == _lastInputComponent.x)
                   || (input.y == _lastInputComponent.y + 1 && input.x == _lastInputComponent.x))
                 {
-                    ReplaceChange(input, input);
-                    ReplaceChange(input, _lastInputComponent);
+                    ReplaceChange(input);
+                    ReplaceChange(_lastInputComponent);
                     _lastInputComponent = null;
                 }
             }
@@ -62,14 +62,12 @@ public sealed class InputSystem : ReactiveSystem<InputEntity>, ICleanupSystem
        
     }
 
-    //执行后，交换两个相邻元素的位置
-    //参数一：第二次点击的元素的组件 参数二：当前要操作的组件
-    private void ReplaceChange(InputComponent input, InputComponent currentInput)
+   
+    private void ReplaceChange(InputComponent input)
     {
-        foreach (var e in _contexts.game.GetEntitiesWithPosition(new IntVector2(currentInput.x, currentInput.y)).Where(e => e.isInteractive))
+        foreach (var e in _contexts.game.GetEntitiesWithMove(new IntVector2(input.x, input.y)).Where(e => e.isInteractive))
         {
-            e.ReplaceChange(new IntVector2(_lastInputComponent.x, _lastInputComponent.y),
-            new IntVector2(input.x, input.y));
+            e.ReplaceExchange(ExchangeState.START);
         }
     }
 

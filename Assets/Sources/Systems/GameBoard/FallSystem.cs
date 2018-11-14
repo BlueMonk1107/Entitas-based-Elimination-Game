@@ -36,7 +36,7 @@ public sealed class FallSystem : ReactiveSystem<GameEntity> {
             {
                 //isMovable标记物体是否可移动
                 var position = new IntVector2(column, row);
-                var movables = _contexts.game.GetEntitiesWithPosition(position)
+                var movables = _contexts.game.GetEntitiesWithMove(position)
                     .Where(e => e.isMovable)
                     .ToArray();
 

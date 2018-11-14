@@ -10,58 +10,58 @@ public static class GameComponentsLookup {
 
     public const int Asset = 0;
     public const int AssetListener = 1;
-    public const int Change = 2;
-    public const int ChangeListener = 3;
-    public const int DebugMsg = 4;
-    public const int Destroyed = 5;
-    public const int DestroyedListener = 6;
-    public const int DetectionSameItem = 7;
-    public const int Eliminate = 8;
-    public const int GameBoard = 9;
-    public const int GameBoardElement = 10;
+    public const int DebugMsg = 2;
+    public const int Destroyed = 3;
+    public const int DestroyedListener = 4;
+    public const int DetectionSameItem = 5;
+    public const int Eliminate = 6;
+    public const int Exchange = 7;
+    public const int GameBoard = 8;
+    public const int GameBoardElement = 9;
+    public const int GetSameColor = 10;
     public const int Interactive = 11;
     public const int Movable = 12;
-    public const int Move = 13;
-    public const int MoveListener = 14;
-    public const int Position = 15;
+    public const int MoveComplete = 13;
+    public const int Move = 14;
+    public const int MoveListener = 15;
 
     public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "Asset",
         "AssetListener",
-        "Change",
-        "ChangeListener",
         "DebugMsg",
         "Destroyed",
         "DestroyedListener",
         "DetectionSameItem",
         "Eliminate",
+        "Exchange",
         "GameBoard",
         "GameBoardElement",
+        "GetSameColor",
         "Interactive",
         "Movable",
+        "MoveComplete",
         "Move",
-        "MoveListener",
-        "Position"
+        "MoveListener"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(AssetComponent),
         typeof(AssetListenerComponent),
-        typeof(ChangeComponent),
-        typeof(ChangeListenerComponent),
         typeof(DebugMsgComponent),
         typeof(DestroyedComponent),
         typeof(DestroyedListenerComponent),
         typeof(DetectionSameItemComponent),
         typeof(EliminateComponent),
+        typeof(ExchangeComponent),
         typeof(GameBoardComponent),
         typeof(GameBoardElementComponent),
+        typeof(GetSameColorComponent),
         typeof(InteractiveComponent),
         typeof(MovableComponent),
+        typeof(MoveCompleteComponent),
         typeof(MoveComponent),
-        typeof(MoveListenerComponent),
-        typeof(PositionComponent)
+        typeof(MoveListenerComponent)
     };
 }

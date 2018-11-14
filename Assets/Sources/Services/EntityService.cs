@@ -30,7 +30,7 @@
         entity.isGameBoardElement = true;
         entity.isMovable = true;
         entity.isInteractive = true;
-        entity.AddPosition(new IntVector2(x, y));
+        entity.AddMove(new IntVector2(x, y));
         entity.AddAsset(randomService.Element(_pieces));
         return entity;
     }
@@ -38,7 +38,7 @@
     public GameEntity CreateBlocker(int x, int y) {
         var entity = _contexts.game.CreateEntity();
         entity.isGameBoardElement = true;
-        entity.AddPosition(new IntVector2(x, y));
+        entity.AddMove(new IntVector2(x, y));
         entity.AddAsset(Res.Blocker);
         return entity;
     }

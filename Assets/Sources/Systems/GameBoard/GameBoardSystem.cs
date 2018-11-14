@@ -9,7 +9,7 @@ public sealed class GameBoardSystem : ReactiveSystem<GameEntity>, IInitializeSys
     readonly IGroup<GameEntity> _gameBoardElements;
 
     public GameBoardSystem(Contexts contexts) : base(contexts.game) {
-        _gameBoardElements = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.GameBoardElement, GameMatcher.Position));
+        _gameBoardElements = contexts.game.GetGroup(GameMatcher.AllOf(GameMatcher.GameBoardElement, GameMatcher.Move));
     }
 
     public void Initialize() {
@@ -24,7 +24,7 @@ public sealed class GameBoardSystem : ReactiveSystem<GameEntity>, IInitializeSys
                 } else {
                     temp = entityService.CreateRandomPiece(column, row);
                 }
-                temp.ReplaceMove(temp.position.value);
+                temp.ReplaceMove(temp.move.target);
             }
         }
     }
@@ -40,7 +40,7 @@ public sealed class GameBoardSystem : ReactiveSystem<GameEntity>, IInitializeSys
     protected override void Execute(List<GameEntity> entities) {
         var gameBoard = entities.SingleEntity().gameBoard;
         foreach (var e in _gameBoardElements) {
-            if (e.position.value.x >= gameBoard.columns || e.position.value.y >= gameBoard.rows) {
+            if (e.move.target.x >= gameBoard.columns || e.move.target.y >= gameBoard.rows) {
                 e.isDestroyed = true;
             }
         }

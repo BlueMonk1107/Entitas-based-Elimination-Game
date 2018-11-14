@@ -13,7 +13,7 @@ public class View : MonoBehaviour, IView, IMoveListener, IDestroyedListener
         _thisGameEntity.AddMoveListener(this);
         _thisGameEntity.AddDestroyedListener(this);
 
-        var pos = _thisGameEntity.position.value;
+        var pos = _thisGameEntity.move.target;
         transform.localPosition = new Vector3(pos.x, pos.y);
     }
 

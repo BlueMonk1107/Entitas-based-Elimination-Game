@@ -60,51 +60,21 @@ public partial class Contexts : Entitas.IContexts {
 //------------------------------------------------------------------------------
 public partial class Contexts {
 
-    public const string ChangeFirstPos = "ChangeFirstPos";
-    public const string ChangeSecondPos = "ChangeSecondPos";
     public const string Move = "Move";
-    public const string Position = "Position";
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
         game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, IntVector2>(
-            ChangeFirstPos,
-            game.GetGroup(GameMatcher.Change),
-            (e, c) => ((ChangeComponent)c).firstPos));
-
-        game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, IntVector2>(
-            ChangeSecondPos,
-            game.GetGroup(GameMatcher.Change),
-            (e, c) => ((ChangeComponent)c).secondPos));
-
-        game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, IntVector2>(
             Move,
             game.GetGroup(GameMatcher.Move),
             (e, c) => ((MoveComponent)c).target));
-
-        game.AddEntityIndex(new Entitas.EntityIndex<GameEntity, IntVector2>(
-            Position,
-            game.GetGroup(GameMatcher.Position),
-            (e, c) => ((PositionComponent)c).value));
     }
 }
 
 public static class ContextsExtensions {
 
-    public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithChangeFirstPos(this GameContext context, IntVector2 firstPos) {
-        return ((Entitas.EntityIndex<GameEntity, IntVector2>)context.GetEntityIndex(Contexts.ChangeFirstPos)).GetEntities(firstPos);
-    }
-
-    public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithChangeSecondPos(this GameContext context, IntVector2 secondPos) {
-        return ((Entitas.EntityIndex<GameEntity, IntVector2>)context.GetEntityIndex(Contexts.ChangeSecondPos)).GetEntities(secondPos);
-    }
-
     public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithMove(this GameContext context, IntVector2 target) {
         return ((Entitas.EntityIndex<GameEntity, IntVector2>)context.GetEntityIndex(Contexts.Move)).GetEntities(target);
-    }
-
-    public static System.Collections.Generic.HashSet<GameEntity> GetEntitiesWithPosition(this GameContext context, IntVector2 value) {
-        return ((Entitas.EntityIndex<GameEntity, IntVector2>)context.GetEntityIndex(Contexts.Position)).GetEntities(value);
     }
 }
 //------------------------------------------------------------------------------
