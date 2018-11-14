@@ -25,11 +25,15 @@ public class JudgeSameColorSystem : ReactiveSystem<GameEntity> {
 
     protected override void Execute(List<GameEntity> entities)
     {
-        List<IEntity> sameEntities = new List<IEntity>();
         foreach (GameEntity gameEntity in entities)
         {
-            sameEntities = gameEntity.detectionSameItem.sameEntities;
-            gameEntity.ReplaceEliminate(sameEntities.Count > 2);
+            gameEntity.ReplaceEliminate(IsMeetTheConditions(gameEntity));
         }
+    }
+
+    private bool IsMeetTheConditions(GameEntity gameEntity)
+    {
+        return gameEntity.detectionSameItem.sameEntitiesHorizontal.Count >= 2 ||
+               gameEntity.detectionSameItem.sameEntitiesVertical.Count >= 2;
     }
 }

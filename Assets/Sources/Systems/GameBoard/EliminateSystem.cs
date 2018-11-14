@@ -28,7 +28,9 @@ public class EliminateSystem : ReactiveSystem<GameEntity> {
         GameEntity temp;
         foreach (GameEntity gameEntity in entities)
         {
-            sameEntities = gameEntity.detectionSameItem.sameEntities;
+            sameEntities.Add(gameEntity);
+            sameEntities.AddRange(gameEntity.detectionSameItem.sameEntitiesHorizontal);
+            sameEntities.AddRange(gameEntity.detectionSameItem.sameEntitiesVertical);
 
             foreach (IEntity e in sameEntities)
             {

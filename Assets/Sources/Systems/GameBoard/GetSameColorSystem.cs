@@ -27,29 +27,18 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     {
         foreach (GameEntity gameEntity in entities)
         {
-            gameEntity.ReplaceDetectionSameItem(JudgeSameColor(gameEntity));
+            gameEntity.ReplaceDetectionSameItem(JudgeHorizontal(gameEntity), JudgeVertical(gameEntity));
             gameEntity.isGetSameColor = false;
         }
     }
 
-    //判断同颜色元素
-    private List<IEntity> JudgeSameColor(GameEntity thisGameEntity)
-    {
-        List<IEntity> sameColorItem = new List<IEntity>();
-        sameColorItem.AddRange(JudgeHorizontal(thisGameEntity));
-        sameColorItem.AddRange(JudgeVertical(thisGameEntity));
-        sameColorItem.Add(thisGameEntity);
-
-        return sameColorItem;
-    }
-
     //判断横向同颜色元素
-    private List<GameEntity> JudgeHorizontal(GameEntity thisGameEntity)
+    private List<IEntity> JudgeHorizontal(GameEntity thisGameEntity)
     {
         string colorName = thisGameEntity.asset.value;
         IntVector2 thisPos = thisGameEntity.move.target;
-        List<GameEntity> sameColorItems = new List<GameEntity>();
-        for (int i = thisPos.x - 1; i >= 0; i--)
+        List<IEntity> sameColorItems = new List<IEntity>();
+        for (int i = thisPos.x -1; i >= 0; i--)
         {
             if (!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
                 break;
@@ -65,12 +54,12 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     }
 
     //判断纵向同颜色元素
-    private List<GameEntity> JudgeVertical(GameEntity thisGameEntity)
+    private List<IEntity> JudgeVertical(GameEntity thisGameEntity)
     {
         string colorName = thisGameEntity.asset.value;
         IntVector2 thisPos = thisGameEntity.move.target;
-        List<GameEntity> sameColorItems = new List<GameEntity>();
-        for (int i = thisPos.y - 1; i >= 0; i--)
+        List<IEntity> sameColorItems = new List<IEntity>();
+        for (int i = thisPos.y -1; i >= 0; i--)
         {
             if (!AddSameColorItem(sameColorItems, thisPos.x, i, colorName))
                 break;
@@ -86,7 +75,7 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     }
 
     //添加同颜色相邻元素
-    private bool AddSameColorItem(List<GameEntity> sameColorItems, int x, int y, string colorName)
+    private bool AddSameColorItem(List<IEntity> sameColorItems, int x, int y, string colorName)
     {
         var array = Contexts.sharedInstance.game.GetEntitiesWithMove(new IntVector2(x, y));
         if (array.Count == 1)

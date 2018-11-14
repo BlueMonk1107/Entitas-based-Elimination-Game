@@ -11,17 +11,19 @@ public partial class GameEntity {
     public DetectionSameItemComponent detectionSameItem { get { return (DetectionSameItemComponent)GetComponent(GameComponentsLookup.DetectionSameItem); } }
     public bool hasDetectionSameItem { get { return HasComponent(GameComponentsLookup.DetectionSameItem); } }
 
-    public void AddDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntities) {
+    public void AddDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesHorizontal, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesVertical) {
         var index = GameComponentsLookup.DetectionSameItem;
         var component = CreateComponent<DetectionSameItemComponent>(index);
-        component.sameEntities = newSameEntities;
+        component.sameEntitiesHorizontal = newSameEntitiesHorizontal;
+        component.sameEntitiesVertical = newSameEntitiesVertical;
         AddComponent(index, component);
     }
 
-    public void ReplaceDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntities) {
+    public void ReplaceDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesHorizontal, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesVertical) {
         var index = GameComponentsLookup.DetectionSameItem;
         var component = CreateComponent<DetectionSameItemComponent>(index);
-        component.sameEntities = newSameEntities;
+        component.sameEntitiesHorizontal = newSameEntitiesHorizontal;
+        component.sameEntitiesVertical = newSameEntitiesVertical;
         ReplaceComponent(index, component);
     }
 
