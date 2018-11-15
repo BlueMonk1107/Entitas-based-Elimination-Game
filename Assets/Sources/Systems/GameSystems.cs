@@ -3,7 +3,8 @@
     public GameSystems(Contexts contexts) {
 
         // Input
-        Add(new InputSystem(contexts));
+        Add(new ClickSystem(contexts));
+        Add(new SlideSystem(contexts));
 
         // Update
         Add(new GameBoardSystems(contexts));

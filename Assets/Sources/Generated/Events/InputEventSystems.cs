@@ -11,6 +11,5 @@ public sealed class InputEventSystems : Feature {
     public InputEventSystems(Contexts contexts) {
         Add(new BurstModeEventSystem(contexts)); // priority: 0
         Add(new BurstModeRemovedEventSystem(contexts)); // priority: 0
-        Add(new SlideEventSystem(contexts)); // priority: 0
     }
 }

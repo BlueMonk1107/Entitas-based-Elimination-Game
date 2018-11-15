@@ -12,22 +12,22 @@ public partial class InputContext {
     public SlideComponent slide { get { return slideEntity.slide; } }
     public bool hasSlide { get { return slideEntity != null; } }
 
-    public InputEntity SetSlide(SlideDirection newDirection) {
+    public InputEntity SetSlide(IntVector2 newClickPos, SlideDirection newDirection) {
         if (hasSlide) {
             throw new Entitas.EntitasException("Could not set Slide!\n" + this + " already has an entity with SlideComponent!",
                 "You should check if the context already has a slideEntity before setting it or use context.ReplaceSlide().");
         }
         var entity = CreateEntity();
-        entity.AddSlide(newDirection);
+        entity.AddSlide(newClickPos, newDirection);
         return entity;
     }
 
-    public void ReplaceSlide(SlideDirection newDirection) {
+    public void ReplaceSlide(IntVector2 newClickPos, SlideDirection newDirection) {
         var entity = slideEntity;
         if (entity == null) {
-            entity = SetSlide(newDirection);
+            entity = SetSlide(newClickPos, newDirection);
         } else {
-            entity.ReplaceSlide(newDirection);
+            entity.ReplaceSlide(newClickPos, newDirection);
         }
     }
 
@@ -49,16 +49,18 @@ public partial class InputEntity {
     public SlideComponent slide { get { return (SlideComponent)GetComponent(InputComponentsLookup.Slide); } }
     public bool hasSlide { get { return HasComponent(InputComponentsLookup.Slide); } }
 
-    public void AddSlide(SlideDirection newDirection) {
+    public void AddSlide(IntVector2 newClickPos, SlideDirection newDirection) {
         var index = InputComponentsLookup.Slide;
         var component = CreateComponent<SlideComponent>(index);
+        component.clickPos = newClickPos;
         component.direction = newDirection;
         AddComponent(index, component);
     }
 
-    public void ReplaceSlide(SlideDirection newDirection) {
+    public void ReplaceSlide(IntVector2 newClickPos, SlideDirection newDirection) {
         var index = InputComponentsLookup.Slide;
         var component = CreateComponent<SlideComponent>(index);
+        component.clickPos = newClickPos;
         component.direction = newDirection;
         ReplaceComponent(index, component);
     }

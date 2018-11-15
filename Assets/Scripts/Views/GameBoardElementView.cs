@@ -7,7 +7,7 @@ using Entitas;
 using Entitas.Unity;
 using UnityEngine;
 
-public class GameBoardElementView : View, ISlideListener
+public class GameBoardElementView : View
 {
     public SpriteRenderer sprite;
     public float destroyDuration;
@@ -40,10 +40,5 @@ public class GameBoardElementView : View, ISlideListener
         gameObject.transform
             .DOScale(Vector3.one * 1.5f, destroyDuration)
             .OnComplete(base.Destroy);
-    }
-
-    public void OnSlide(InputEntity entity, SlideDirection direction)
-    {
-        throw new NotImplementedException();
     }
 }
