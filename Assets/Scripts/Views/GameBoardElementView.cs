@@ -11,21 +11,15 @@ public class GameBoardElementView : View
 {
     public SpriteRenderer sprite;
     public float destroyDuration;
-    private IntVector2 _lastPos;
-    private static int _changeTimes;
-    private ExchangeState _exchangeState;
 
     public override void Link(IEntity entity, IContext context)
     {
         base.Link(entity, context);
-        _lastPos = IntVector2.DefaultValue();
-        _exchangeState = ExchangeState.NONE;
         transform.position = new Vector3(_thisGameEntity.move.target.x, Contexts.sharedInstance.game.gameBoard.rows,0);
     }
 
     public override void OnMove(GameEntity entity, IntVector2 target)
     {
-    
         transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(() =>
         {
             _thisGameEntity.isMoveComplete = true;
