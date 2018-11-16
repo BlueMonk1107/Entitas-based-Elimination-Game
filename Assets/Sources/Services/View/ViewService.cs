@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ViewService : IAssetListener
+public class ViewService : ILoadPrefabListener
 {
 
     public static ViewService singleton = new ViewService();
@@ -14,7 +14,7 @@ public class ViewService : IAssetListener
     {
         _contexts = contexts;
         _parent = parent;
-        contexts.game.CreateEntity().AddAssetListener(this);
+        contexts.game.CreateEntity().AddLoadPrefabListener(this);
         _settledParent = new GameObject("settled").transform;
         _settledParent.SetParent(_parent);
         _settledParent.position = new Vector3(0, 0, -0.01f);
@@ -22,7 +22,7 @@ public class ViewService : IAssetListener
         _movableParent.SetParent(_parent);
     }
 
-    public void OnAsset(GameEntity entity, string value)
+    public void OnLoadPrefab(GameEntity entity, string path)
     {
         Transform parent = null;
         if (entity.isMovable)
@@ -33,7 +33,7 @@ public class ViewService : IAssetListener
         {
             parent = _settledParent;
         }
-        var prefab = Resources.Load<GameObject>(value);
+        var prefab = Resources.Load<GameObject>(Res.PREFAB_FOLDER + path);
         var view = Object.Instantiate(prefab, parent).GetComponent<IView>();
         view.Link(entity, _contexts.game);
     }

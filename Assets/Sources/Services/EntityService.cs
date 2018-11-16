@@ -5,12 +5,12 @@
     public static EntityService singleton = new EntityService();
 
     static readonly string[] _items = {
-        Res.RED_PREFAB,
-        Res.GREEN_PREFAB,
-        Res.BLUE_PREFAB,
-        Res.YELLOW_PREFAB,
-        Res.PURPLE_PREFAB,
-        Res.CYAN_PREFAB
+        Res.RED_NAME,
+        Res.GREEN_NAME,
+        Res.BLUE_NAME,
+        Res.YELLOW_NAME,
+        Res.PURPLE_NAME,
+        Res.CYAN_NAME
     };
 
     Contexts _contexts;
@@ -32,7 +32,7 @@
         entity.isInteractive = true;
         entity.AddMove(new IntVector2(x, y));
         entity.AddEffectState(ItemEffctName.NONE);
-        entity.AddAsset(randomService.Element(_items));
+        entity.AddLoadPrefab(randomService.Element(_items));
         return entity;
     }
 
@@ -40,7 +40,7 @@
         var entity = _contexts.game.CreateEntity();
         entity.isGameBoardElement = true;
         entity.AddMove(new IntVector2(x, y));
-        entity.AddAsset(Res.OBSTACLE_PREFAB);
+        entity.AddLoadPrefab(Res.OBSTACLE_NAME);
         return entity;
     }
 }

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public AssetComponent asset { get { return (AssetComponent)GetComponent(GameComponentsLookup.Asset); } }
-    public bool hasAsset { get { return HasComponent(GameComponentsLookup.Asset); } }
+    public LoadPrefabComponent loadPrefab { get { return (LoadPrefabComponent)GetComponent(GameComponentsLookup.LoadPrefab); } }
+    public bool hasLoadPrefab { get { return HasComponent(GameComponentsLookup.LoadPrefab); } }
 
-    public void AddAsset(string newValue) {
-        var index = GameComponentsLookup.Asset;
-        var component = CreateComponent<AssetComponent>(index);
-        component.value = newValue;
+    public void AddLoadPrefab(string newPath) {
+        var index = GameComponentsLookup.LoadPrefab;
+        var component = CreateComponent<LoadPrefabComponent>(index);
+        component.path = newPath;
         AddComponent(index, component);
     }
 
-    public void ReplaceAsset(string newValue) {
-        var index = GameComponentsLookup.Asset;
-        var component = CreateComponent<AssetComponent>(index);
-        component.value = newValue;
+    public void ReplaceLoadPrefab(string newPath) {
+        var index = GameComponentsLookup.LoadPrefab;
+        var component = CreateComponent<LoadPrefabComponent>(index);
+        component.path = newPath;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveAsset() {
-        RemoveComponent(GameComponentsLookup.Asset);
+    public void RemoveLoadPrefab() {
+        RemoveComponent(GameComponentsLookup.LoadPrefab);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherAsset;
+    static Entitas.IMatcher<GameEntity> _matcherLoadPrefab;
 
-    public static Entitas.IMatcher<GameEntity> Asset {
+    public static Entitas.IMatcher<GameEntity> LoadPrefab {
         get {
-            if (_matcherAsset == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Asset);
+            if (_matcherLoadPrefab == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.LoadPrefab);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherAsset = matcher;
+                _matcherLoadPrefab = matcher;
             }
 
-            return _matcherAsset;
+            return _matcherLoadPrefab;
         }
     }
 }

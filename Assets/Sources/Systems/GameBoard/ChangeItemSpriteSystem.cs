@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System;
+using Entitas;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,9 +25,27 @@ public class ChangeItemSpriteSystem : ReactiveSystem<GameEntity> {
 
     protected override void Execute(List<GameEntity> entities)
     {
+        string name = "";
         foreach (GameEntity entity in entities)
         {
-
+            switch (entity.effectState.itemEffctName)
+            {
+                case ItemEffctName.ELIMINATE_SAME_COLOR:
+                    name = Res.ALL_POSTFIX;
+                    break;
+                case ItemEffctName.ELIMINATE_HORIZONTAL:
+                    name = Res.HORIZONTAL_POSTFIX;
+                    break;
+                case ItemEffctName.ELIMINATE_VERTICAL:
+                    name = Res.VERTICAL_POSTFIX;
+                    break;
+                case ItemEffctName.EXPLODE:
+                    name = Res.EXPLODE_POSTFIX;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            entity.ReplaceLoadSprite(Res.SPRITES_FOLDER + entity.loadPrefab.path + name);
         }
     }
 }

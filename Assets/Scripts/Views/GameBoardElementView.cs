@@ -7,7 +7,7 @@ using Entitas;
 using Entitas.Unity;
 using UnityEngine;
 
-public class GameBoardElementView : View
+public class GameBoardElementView : View,ILoadSpriteListener
 {
     public SpriteRenderer sprite;
     public float destroyDuration;
@@ -15,6 +15,7 @@ public class GameBoardElementView : View
     public override void Link(IEntity entity, IContext context)
     {
         base.Link(entity, context);
+        _thisGameEntity.AddLoadSpriteListener(this);
         transform.position = new Vector3(_thisGameEntity.move.target.x, Contexts.sharedInstance.game.gameBoard.rows,0);
     }
 
@@ -34,5 +35,10 @@ public class GameBoardElementView : View
         gameObject.transform
             .DOScale(Vector3.one * 1.5f, destroyDuration)
             .OnComplete(base.Destroy);
+    }
+
+    public void OnLoadSprite(GameEntity entity, string path)
+    {
+        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path);
     }
 }

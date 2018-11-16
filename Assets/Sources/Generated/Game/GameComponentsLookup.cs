@@ -8,30 +8,30 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int Asset = 0;
-    public const int AssetListener = 1;
-    public const int DebugMsg = 2;
-    public const int Destroyed = 3;
-    public const int DestroyedListener = 4;
-    public const int DetectionSameItem = 5;
-    public const int EffectState = 6;
-    public const int Eliminate = 7;
-    public const int Exchange = 8;
-    public const int GameBoard = 9;
-    public const int GameBoardElement = 10;
-    public const int GetSameColor = 11;
-    public const int Interactive = 12;
-    public const int JudgeFormation = 13;
-    public const int Movable = 14;
-    public const int MoveComplete = 15;
-    public const int Move = 16;
-    public const int MoveListener = 17;
+    public const int DebugMsg = 0;
+    public const int Destroyed = 1;
+    public const int DestroyedListener = 2;
+    public const int DetectionSameItem = 3;
+    public const int EffectState = 4;
+    public const int Eliminate = 5;
+    public const int Exchange = 6;
+    public const int GameBoard = 7;
+    public const int GameBoardElement = 8;
+    public const int GetSameColor = 9;
+    public const int Interactive = 10;
+    public const int JudgeFormation = 11;
+    public const int LoadPrefab = 12;
+    public const int LoadPrefabListener = 13;
+    public const int LoadSprite = 14;
+    public const int LoadSpriteListener = 15;
+    public const int Movable = 16;
+    public const int MoveComplete = 17;
+    public const int Move = 18;
+    public const int MoveListener = 19;
 
-    public const int TotalComponents = 18;
+    public const int TotalComponents = 20;
 
     public static readonly string[] componentNames = {
-        "Asset",
-        "AssetListener",
         "DebugMsg",
         "Destroyed",
         "DestroyedListener",
@@ -44,6 +44,10 @@ public static class GameComponentsLookup {
         "GetSameColor",
         "Interactive",
         "JudgeFormation",
+        "LoadPrefab",
+        "LoadPrefabListener",
+        "LoadSprite",
+        "LoadSpriteListener",
         "Movable",
         "MoveComplete",
         "Move",
@@ -51,8 +55,6 @@ public static class GameComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(AssetComponent),
-        typeof(AssetListenerComponent),
         typeof(DebugMsgComponent),
         typeof(DestroyedComponent),
         typeof(DestroyedListenerComponent),
@@ -65,6 +67,10 @@ public static class GameComponentsLookup {
         typeof(GetSameColorComponent),
         typeof(InteractiveComponent),
         typeof(JudgeFormationComponent),
+        typeof(LoadPrefabComponent),
+        typeof(LoadPrefabListenerComponent),
+        typeof(LoadSpriteComponent),
+        typeof(LoadSpriteListenerComponent),
         typeof(MovableComponent),
         typeof(MoveCompleteComponent),
         typeof(MoveComponent),

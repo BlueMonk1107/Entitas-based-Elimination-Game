@@ -6,36 +6,36 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class AssetEventSystem : Entitas.ReactiveSystem<GameEntity> {
+public sealed class LoadPrefabEventSystem : Entitas.ReactiveSystem<GameEntity> {
 
     readonly Entitas.IGroup<GameEntity> _listeners;
     readonly System.Collections.Generic.List<GameEntity> _entityBuffer;
-    readonly System.Collections.Generic.List<IAssetListener> _listenerBuffer;
+    readonly System.Collections.Generic.List<ILoadPrefabListener> _listenerBuffer;
 
-    public AssetEventSystem(Contexts contexts) : base(contexts.game) {
-        _listeners = contexts.game.GetGroup(GameMatcher.AssetListener);
+    public LoadPrefabEventSystem(Contexts contexts) : base(contexts.game) {
+        _listeners = contexts.game.GetGroup(GameMatcher.LoadPrefabListener);
         _entityBuffer = new System.Collections.Generic.List<GameEntity>();
-        _listenerBuffer = new System.Collections.Generic.List<IAssetListener>();
+        _listenerBuffer = new System.Collections.Generic.List<ILoadPrefabListener>();
     }
 
     protected override Entitas.ICollector<GameEntity> GetTrigger(Entitas.IContext<GameEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.Added(GameMatcher.Asset)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(GameMatcher.LoadPrefab)
         );
     }
 
     protected override bool Filter(GameEntity entity) {
-        return entity.hasAsset;
+        return entity.hasLoadPrefab;
     }
 
     protected override void Execute(System.Collections.Generic.List<GameEntity> entities) {
         foreach (var e in entities) {
-            var component = e.asset;
+            var component = e.loadPrefab;
             foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
                 _listenerBuffer.Clear();
-                _listenerBuffer.AddRange(listenerEntity.assetListener.value);
+                _listenerBuffer.AddRange(listenerEntity.loadPrefabListener.value);
                 foreach (var listener in _listenerBuffer) {
-                    listener.OnAsset(e, component.value);
+                    listener.OnLoadPrefab(e, component.path);
                 }
             }
         }
