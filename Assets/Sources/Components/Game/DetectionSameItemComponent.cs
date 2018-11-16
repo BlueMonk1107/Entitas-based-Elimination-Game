@@ -10,6 +10,8 @@ using UnityEngine;
 [Game]
 public class DetectionSameItemComponent : IComponent
 {
-    public List<IEntity> sameEntitiesHorizontal;
-    public List<IEntity> sameEntitiesVertical;
+    public List<IEntity> sameEntitiesLeft;
+    public List<IEntity> sameEntitiesRight;
+    public List<IEntity> sameEntitiesUp;
+    public List<IEntity> sameEntitiesDown;
 }

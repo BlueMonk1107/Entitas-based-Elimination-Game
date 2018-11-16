@@ -46,7 +46,7 @@ public class InputController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0) && _time < 0.5f)
+        if (Input.GetMouseButtonUp(0) && _time > 0.1f && _time < 0.5f)
         {
             Slide();
         }

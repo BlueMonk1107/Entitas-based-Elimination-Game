@@ -4,13 +4,13 @@
 
     public static EntityService singleton = new EntityService();
 
-    static readonly string[] _pieces = {
-        Res.Piece0,
-        Res.Piece1,
-        Res.Piece2,
-        Res.Piece3,
-        Res.Piece4,
-        Res.Piece5
+    static readonly string[] _items = {
+        Res.RED_PREFAB,
+        Res.GREEN_PREFAB,
+        Res.BLUE_PREFAB,
+        Res.YELLOW_PREFAB,
+        Res.PURPLE_PREFAB,
+        Res.CYAN_PREFAB
     };
 
     Contexts _contexts;
@@ -31,7 +31,8 @@
         entity.isMovable = true;
         entity.isInteractive = true;
         entity.AddMove(new IntVector2(x, y));
-        entity.AddAsset(randomService.Element(_pieces));
+        entity.AddEffectState(ItemEffctName.NONE);
+        entity.AddAsset(randomService.Element(_items));
         return entity;
     }
 
@@ -39,7 +40,7 @@
         var entity = _contexts.game.CreateEntity();
         entity.isGameBoardElement = true;
         entity.AddMove(new IntVector2(x, y));
-        entity.AddAsset(Res.Blocker);
+        entity.AddAsset(Res.OBSTACLE_PREFAB);
         return entity;
     }
 }

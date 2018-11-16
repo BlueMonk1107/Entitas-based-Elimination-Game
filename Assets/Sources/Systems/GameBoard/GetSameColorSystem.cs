@@ -27,22 +27,37 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     {
         foreach (GameEntity gameEntity in entities)
         {
-            gameEntity.ReplaceDetectionSameItem(JudgeHorizontal(gameEntity), JudgeVertical(gameEntity));
+            gameEntity.ReplaceDetectionSameItem(
+                JudgeLeft(gameEntity), 
+                JudgeRight(gameEntity),
+                JudgeUp(gameEntity),
+                JudgeDown(gameEntity));
             gameEntity.isGetSameColor = false;
         }
     }
 
-    //判断横向同颜色元素
-    private List<IEntity> JudgeHorizontal(GameEntity thisGameEntity)
+    //判断左侧同颜色元素
+    private List<IEntity> JudgeLeft(GameEntity thisGameEntity)
     {
         string colorName = thisGameEntity.asset.value;
         IntVector2 thisPos = thisGameEntity.move.target;
         List<IEntity> sameColorItems = new List<IEntity>();
+
         for (int i = thisPos.x -1; i >= 0; i--)
         {
             if (!AddSameColorItem(sameColorItems, i, thisPos.y, colorName))
                 break;
         }
+
+        return sameColorItems;
+    }
+
+    //判断右侧同颜色元素
+    private List<IEntity> JudgeRight(GameEntity thisGameEntity)
+    {
+        string colorName = thisGameEntity.asset.value;
+        IntVector2 thisPos = thisGameEntity.move.target;
+        List<IEntity> sameColorItems = new List<IEntity>();
 
         for (int i = thisPos.x + 1; i < Contexts.sharedInstance.game.gameBoard.columns; i++)
         {
@@ -53,19 +68,30 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
         return sameColorItems;
     }
 
-    //判断纵向同颜色元素
-    private List<IEntity> JudgeVertical(GameEntity thisGameEntity)
+    //判断上方同颜色元素
+    private List<IEntity> JudgeUp(GameEntity thisGameEntity)
     {
         string colorName = thisGameEntity.asset.value;
         IntVector2 thisPos = thisGameEntity.move.target;
         List<IEntity> sameColorItems = new List<IEntity>();
-        for (int i = thisPos.y -1; i >= 0; i--)
+
+        for (int i = thisPos.y + 1; i < Contexts.sharedInstance.game.gameBoard.rows; i++)
         {
             if (!AddSameColorItem(sameColorItems, thisPos.x, i, colorName))
                 break;
         }
 
-        for (int i = thisPos.y + 1; i < Contexts.sharedInstance.game.gameBoard.rows; i++)
+        return sameColorItems;
+    }
+
+    //判断下方同颜色元素
+    private List<IEntity> JudgeDown(GameEntity thisGameEntity)
+    {
+        string colorName = thisGameEntity.asset.value;
+        IntVector2 thisPos = thisGameEntity.move.target;
+        List<IEntity> sameColorItems = new List<IEntity>();
+
+        for (int i = thisPos.y - 1; i >= 0; i--)
         {
             if (!AddSameColorItem(sameColorItems, thisPos.x, i, colorName))
                 break;

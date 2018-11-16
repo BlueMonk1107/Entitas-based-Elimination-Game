@@ -18,3 +18,27 @@ public enum ExchangeState
     EXCHANGEBACK,
     END
 }
+
+/// <summary>
+/// 特殊元素效果名称
+/// </summary>
+public enum ItemEffctName
+{
+    NONE,
+    /// <summary>
+    /// 消除所有同色元素
+    /// </summary>
+    ELIMINATE_SAME_COLOR,
+    /// <summary>
+    /// 消除行
+    /// </summary>
+    ELIMINATE_HORIZONTAL,
+    /// <summary>
+    /// 消除列
+    /// </summary>
+    ELIMINATE_VERTICAL,
+    /// <summary>
+    /// 爆炸
+    /// </summary>
+    EXPLODE
+}

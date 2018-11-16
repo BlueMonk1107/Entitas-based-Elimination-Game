@@ -11,19 +11,23 @@ public partial class GameEntity {
     public DetectionSameItemComponent detectionSameItem { get { return (DetectionSameItemComponent)GetComponent(GameComponentsLookup.DetectionSameItem); } }
     public bool hasDetectionSameItem { get { return HasComponent(GameComponentsLookup.DetectionSameItem); } }
 
-    public void AddDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesHorizontal, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesVertical) {
+    public void AddDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesLeft, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesRight, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesUp, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesDown) {
         var index = GameComponentsLookup.DetectionSameItem;
         var component = CreateComponent<DetectionSameItemComponent>(index);
-        component.sameEntitiesHorizontal = newSameEntitiesHorizontal;
-        component.sameEntitiesVertical = newSameEntitiesVertical;
+        component.sameEntitiesLeft = newSameEntitiesLeft;
+        component.sameEntitiesRight = newSameEntitiesRight;
+        component.sameEntitiesUp = newSameEntitiesUp;
+        component.sameEntitiesDown = newSameEntitiesDown;
         AddComponent(index, component);
     }
 
-    public void ReplaceDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesHorizontal, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesVertical) {
+    public void ReplaceDetectionSameItem(System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesLeft, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesRight, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesUp, System.Collections.Generic.List<Entitas.IEntity> newSameEntitiesDown) {
         var index = GameComponentsLookup.DetectionSameItem;
         var component = CreateComponent<DetectionSameItemComponent>(index);
-        component.sameEntitiesHorizontal = newSameEntitiesHorizontal;
-        component.sameEntitiesVertical = newSameEntitiesVertical;
+        component.sameEntitiesLeft = newSameEntitiesLeft;
+        component.sameEntitiesRight = newSameEntitiesRight;
+        component.sameEntitiesUp = newSameEntitiesUp;
+        component.sameEntitiesDown = newSameEntitiesDown;
         ReplaceComponent(index, component);
     }
 

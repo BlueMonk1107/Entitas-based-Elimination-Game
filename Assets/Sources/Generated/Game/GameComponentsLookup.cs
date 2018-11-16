@@ -14,18 +14,20 @@ public static class GameComponentsLookup {
     public const int Destroyed = 3;
     public const int DestroyedListener = 4;
     public const int DetectionSameItem = 5;
-    public const int Eliminate = 6;
-    public const int Exchange = 7;
-    public const int GameBoard = 8;
-    public const int GameBoardElement = 9;
-    public const int GetSameColor = 10;
-    public const int Interactive = 11;
-    public const int Movable = 12;
-    public const int MoveComplete = 13;
-    public const int Move = 14;
-    public const int MoveListener = 15;
+    public const int EffectState = 6;
+    public const int Eliminate = 7;
+    public const int Exchange = 8;
+    public const int GameBoard = 9;
+    public const int GameBoardElement = 10;
+    public const int GetSameColor = 11;
+    public const int Interactive = 12;
+    public const int JudgeFormation = 13;
+    public const int Movable = 14;
+    public const int MoveComplete = 15;
+    public const int Move = 16;
+    public const int MoveListener = 17;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "Asset",
@@ -34,12 +36,14 @@ public static class GameComponentsLookup {
         "Destroyed",
         "DestroyedListener",
         "DetectionSameItem",
+        "EffectState",
         "Eliminate",
         "Exchange",
         "GameBoard",
         "GameBoardElement",
         "GetSameColor",
         "Interactive",
+        "JudgeFormation",
         "Movable",
         "MoveComplete",
         "Move",
@@ -53,12 +57,14 @@ public static class GameComponentsLookup {
         typeof(DestroyedComponent),
         typeof(DestroyedListenerComponent),
         typeof(DetectionSameItemComponent),
+        typeof(EffectStateComponent),
         typeof(EliminateComponent),
         typeof(ExchangeComponent),
         typeof(GameBoardComponent),
         typeof(GameBoardElementComponent),
         typeof(GetSameColorComponent),
         typeof(InteractiveComponent),
+        typeof(JudgeFormationComponent),
         typeof(MovableComponent),
         typeof(MoveCompleteComponent),
         typeof(MoveComponent),

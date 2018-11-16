@@ -12,5 +12,7 @@ public sealed class GameBoardSystems : Feature {
         Add(new ExhangeBackSystem(contexts));
         Add(new GetSameColorSystem(contexts));
         Add(new MoveCompleteSystem(contexts));
+        Add(new ChangeItemSpriteSystem(contexts));
+        Add(new JudgeFormationSystem(contexts));
     }
 }

@@ -27,13 +27,22 @@ public class JudgeSameColorSystem : ReactiveSystem<GameEntity> {
     {
         foreach (GameEntity gameEntity in entities)
         {
-            gameEntity.ReplaceEliminate(IsMeetTheConditions(gameEntity));
+            if (IsMeetTheConditions(gameEntity))
+            {
+                gameEntity.isJudgeFormation = true;
+            }
         }
     }
 
+    //是否符合消除条件
     private bool IsMeetTheConditions(GameEntity gameEntity)
     {
-        return gameEntity.detectionSameItem.sameEntitiesHorizontal.Count >= 2 ||
-               gameEntity.detectionSameItem.sameEntitiesVertical.Count >= 2;
+        int left = gameEntity.detectionSameItem.sameEntitiesLeft.Count;
+        int right = gameEntity.detectionSameItem.sameEntitiesRight.Count;
+        int up = gameEntity.detectionSameItem.sameEntitiesUp.Count;
+        int down = gameEntity.detectionSameItem.sameEntitiesDown.Count;
+
+        return left + right >= 2 
+            || up   + down  >= 2;
     }
 }
