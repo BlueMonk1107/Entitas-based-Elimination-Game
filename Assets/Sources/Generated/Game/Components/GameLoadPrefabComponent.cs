@@ -14,14 +14,14 @@ public partial class GameEntity {
     public void AddLoadPrefab(string newPath) {
         var index = GameComponentsLookup.LoadPrefab;
         var component = CreateComponent<LoadPrefabComponent>(index);
-        component.path = newPath;
+        component.name = newPath;
         AddComponent(index, component);
     }
 
     public void ReplaceLoadPrefab(string newPath) {
         var index = GameComponentsLookup.LoadPrefab;
         var component = CreateComponent<LoadPrefabComponent>(index);
-        component.path = newPath;
+        component.name = newPath;
         ReplaceComponent(index, component);
     }
 

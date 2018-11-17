@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas;
-using UnityEngine;
 
 /// <summary>
 /// 判断阵型是否能生成特效元素

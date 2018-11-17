@@ -39,7 +39,7 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     //判断左侧同颜色元素
     private List<IEntity> JudgeLeft(GameEntity thisGameEntity)
     {
-        string colorName = thisGameEntity.loadPrefab.path;
+        string colorName = thisGameEntity.loadPrefab.name;
         IntVector2 thisPos = thisGameEntity.move.target;
         List<IEntity> sameColorItems = new List<IEntity>();
 
@@ -55,7 +55,7 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     //判断右侧同颜色元素
     private List<IEntity> JudgeRight(GameEntity thisGameEntity)
     {
-        string colorName = thisGameEntity.loadPrefab.path;
+        string colorName = thisGameEntity.loadPrefab.name;
         IntVector2 thisPos = thisGameEntity.move.target;
         List<IEntity> sameColorItems = new List<IEntity>();
 
@@ -71,7 +71,7 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     //判断上方同颜色元素
     private List<IEntity> JudgeUp(GameEntity thisGameEntity)
     {
-        string colorName = thisGameEntity.loadPrefab.path;
+        string colorName = thisGameEntity.loadPrefab.name;
         IntVector2 thisPos = thisGameEntity.move.target;
         List<IEntity> sameColorItems = new List<IEntity>();
 
@@ -87,7 +87,7 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
     //判断下方同颜色元素
     private List<IEntity> JudgeDown(GameEntity thisGameEntity)
     {
-        string colorName = thisGameEntity.loadPrefab.path;
+        string colorName = thisGameEntity.loadPrefab.name;
         IntVector2 thisPos = thisGameEntity.move.target;
         List<IEntity> sameColorItems = new List<IEntity>();
 
@@ -111,7 +111,7 @@ public class GetSameColorSystem : ReactiveSystem<GameEntity>
             if (!targetEntity.isMovable)
                 return false;
 
-            if (targetEntity.loadPrefab.path == colorName)
+            if (targetEntity.loadPrefab.name == colorName)
             {
                 sameColorItems.Add(targetEntity);
                 return true;

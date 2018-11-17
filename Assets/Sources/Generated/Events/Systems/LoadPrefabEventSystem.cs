@@ -35,7 +35,7 @@ public sealed class LoadPrefabEventSystem : Entitas.ReactiveSystem<GameEntity> {
                 _listenerBuffer.Clear();
                 _listenerBuffer.AddRange(listenerEntity.loadPrefabListener.value);
                 foreach (var listener in _listenerBuffer) {
-                    listener.OnLoadPrefab(e, component.path);
+                    listener.OnLoadPrefab(e, component.name);
                 }
             }
         }

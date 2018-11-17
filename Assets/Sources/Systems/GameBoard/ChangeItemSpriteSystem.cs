@@ -1,8 +1,6 @@
 ﻿using System;
 using Entitas;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// 根据特效给元素切换图片
@@ -45,7 +43,7 @@ public class ChangeItemSpriteSystem : ReactiveSystem<GameEntity> {
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            entity.ReplaceLoadSprite(Res.SPRITES_FOLDER + entity.loadPrefab.path + name);
+            entity.ReplaceLoadSprite(Res.SPRITES_FOLDER + entity.loadPrefab.name + name);
         }
     }
 }

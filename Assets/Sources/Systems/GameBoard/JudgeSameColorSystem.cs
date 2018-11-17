@@ -1,8 +1,5 @@
 ﻿using Entitas;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 /// <summary>
 /// 判断是否存在满足条件的相邻同色元素

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Entitas;
-using Entitas.Unity;
 using UnityEngine;
 
 public class GameBoardElementView : View,ILoadSpriteListener
