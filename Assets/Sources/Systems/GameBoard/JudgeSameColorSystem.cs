@@ -28,6 +28,10 @@ public class JudgeSameColorSystem : ReactiveSystem<GameEntity> {
             {
                 gameEntity.isJudgeFormation = true;
             }
+            else
+            {
+                gameEntity.ReplaceEliminate(false);
+            }
         }
     }
 
