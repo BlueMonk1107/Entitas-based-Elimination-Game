@@ -37,7 +37,10 @@ public class EliminateSystem : ReactiveSystem<GameEntity> {
             foreach (IEntity e in sameEntities)
             {
                 temp = e as GameEntity;
-                if (temp != null) temp.isDestroyed = true;
+                if (temp != null)
+                {
+                    temp.isDestroyed = true;
+                }
             }
         }
         

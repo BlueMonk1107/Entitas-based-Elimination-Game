@@ -34,7 +34,10 @@ public class ViewService : ILoadPrefabListener
             parent = _settledParent;
         }
         var prefab = Resources.Load<GameObject>(Res.PREFAB_FOLDER + path);
-        var view = Object.Instantiate(prefab, parent).GetComponent<IView>();
+        GameObject go = Object.Instantiate(prefab, parent);
+        var view = go.GetComponent<IView>();
         view.Link(entity, _contexts.game);
+        IView audio = go.AddComponent<AudioView>();
+        audio.Link(entity, _contexts.game);
     }
 }

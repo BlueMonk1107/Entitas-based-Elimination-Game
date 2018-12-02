@@ -13,18 +13,26 @@ public sealed class GameBoardSystem : ReactiveSystem<GameEntity>, IInitializeSys
     }
 
     public void Initialize() {
+
+        List<List<int>> list =  new List<List<int>>();
+        list.Add(Models.Instance.DataModel.Level[0].row_0);
+        list.Add(Models.Instance.DataModel.Level[0].row_1);
+        list.Add(Models.Instance.DataModel.Level[0].row_2);
+        list.Add(Models.Instance.DataModel.Level[0].row_3);
+        list.Add(Models.Instance.DataModel.Level[0].row_4);
+        list.Add(Models.Instance.DataModel.Level[0].row_5);
+        list.Add(Models.Instance.DataModel.Level[0].row_6);
+        list.Add(Models.Instance.DataModel.Level[0].row_7);
+        list.Add(Models.Instance.DataModel.Level[0].row_8);
+
         //初始化游戏面板数据
         var gameBoard = entityService.CreateGameBoard().gameBoard;
         //根据策略 选择生成障碍 还是 元素
         GameEntity temp = null;
         for (int row = 0; row < gameBoard.rows; row++) {
-            for (int column = 0; column < gameBoard.columns; column++) {
-                if (randomService.Bool(0.1f)) {
-                    temp = entityService.CreateBlocker(column, row);
-                } else {
-                    temp = entityService.CreateRandomPiece(column, row);
-                }
-                temp.ReplaceMove(temp.move.target);
+            for (int index = 0; index < list[row].Count; index++)
+            {
+                EntityService.singleton.CreatePiece(list[row][index], index, row);
             }
         }
     }

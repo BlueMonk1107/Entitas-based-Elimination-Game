@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public LoadPrefabComponent loadPrefab { get { return (LoadPrefabComponent)GetComponent(GameComponentsLookup.LoadPrefab); } }
-    public bool hasLoadPrefab { get { return HasComponent(GameComponentsLookup.LoadPrefab); } }
+    public AudioComponent audio { get { return (AudioComponent)GetComponent(GameComponentsLookup.Audio); } }
+    public bool hasAudio { get { return HasComponent(GameComponentsLookup.Audio); } }
 
-    public void AddLoadPrefab(string newName) {
-        var index = GameComponentsLookup.LoadPrefab;
-        var component = CreateComponent<LoadPrefabComponent>(index);
-        component.name = newName;
+    public void AddAudio(string newPath) {
+        var index = GameComponentsLookup.Audio;
+        var component = CreateComponent<AudioComponent>(index);
+        component.path = newPath;
         AddComponent(index, component);
     }
 
-    public void ReplaceLoadPrefab(string newName) {
-        var index = GameComponentsLookup.LoadPrefab;
-        var component = CreateComponent<LoadPrefabComponent>(index);
-        component.name = newName;
+    public void ReplaceAudio(string newPath) {
+        var index = GameComponentsLookup.Audio;
+        var component = CreateComponent<AudioComponent>(index);
+        component.path = newPath;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveLoadPrefab() {
-        RemoveComponent(GameComponentsLookup.LoadPrefab);
+    public void RemoveAudio() {
+        RemoveComponent(GameComponentsLookup.Audio);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherLoadPrefab;
+    static Entitas.IMatcher<GameEntity> _matcherAudio;
 
-    public static Entitas.IMatcher<GameEntity> LoadPrefab {
+    public static Entitas.IMatcher<GameEntity> Audio {
         get {
-            if (_matcherLoadPrefab == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.LoadPrefab);
+            if (_matcherAudio == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Audio);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherLoadPrefab = matcher;
+                _matcherAudio = matcher;
             }
 
-            return _matcherLoadPrefab;
+            return _matcherAudio;
         }
     }
 }

@@ -16,9 +16,15 @@ public sealed class GameBoardSystems : Feature
         Add(new MoveCompleteSystem(contexts));
         Add(new ChangeItemSpriteSystem(contexts));
         Add(new JudgeFormationSystem(contexts));
+
         Add(new EliminateHorizontalSystem(contexts));
         Add(new EliminateSameColorSystem(contexts));
         Add(new EliminateVerticalSystem(contexts));
+
         Add(new ExplodeSystem(contexts));
+
+        Add(new EliminateAudioSystem(contexts));
+        Add(new FallAudioSystem(contexts));
+        Add(new ExchangeAudioSystem(contexts));
     }
 }

@@ -23,6 +23,7 @@ public class MoveCompleteSystem : ReactiveSystem<GameEntity> {
     {
         foreach (GameEntity gameEntity in entities)
         {
+            gameEntity.ReplaceFallState(FallState.STAY);
             gameEntity.isGetSameColor = true;
             gameEntity.isMoveComplete = false;
         }

@@ -42,3 +42,24 @@ public enum ItemEffctName
     /// </summary>
     EXPLODE
 }
+
+/// <summary>
+/// 声音资源名称
+/// </summary>
+public enum AudioName
+{
+    Bg,
+    Fall,
+    NormalBomb,
+    SpecialBomb,
+    Switch
+}
+
+/// <summary>
+/// 元素下落状态
+/// </summary>
+public enum FallState
+{
+    STAY,
+    FALL
+}

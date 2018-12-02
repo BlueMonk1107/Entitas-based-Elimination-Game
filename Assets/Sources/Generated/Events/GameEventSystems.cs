@@ -9,6 +9,7 @@
 public sealed class GameEventSystems : Feature {
 
     public GameEventSystems(Contexts contexts) {
+        Add(new AudioEventSystem(contexts)); // priority: 0
         Add(new DestroyedEventSystem(contexts)); // priority: 0
         Add(new LoadPrefabEventSystem(contexts)); // priority: 0
         Add(new LoadSpriteEventSystem(contexts)); // priority: 0

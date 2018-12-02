@@ -17,7 +17,6 @@
 
         // Cleanup
         Add(new DestroyEntitySystem(contexts));
-
         Add(new DebugMessageSystem(contexts));
     }
 }

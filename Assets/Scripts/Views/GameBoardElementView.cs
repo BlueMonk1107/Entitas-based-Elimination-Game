@@ -2,7 +2,7 @@
 using Entitas;
 using UnityEngine;
 
-public class GameBoardElementView : View,ILoadSpriteListener
+public class GameBoardElementView : View, ILoadSpriteListener
 {
     public SpriteRenderer sprite;
     public float destroyDuration;
@@ -11,7 +11,8 @@ public class GameBoardElementView : View,ILoadSpriteListener
     {
         base.Link(entity, context);
         _thisGameEntity.AddLoadSpriteListener(this);
-        transform.position = new Vector3(_thisGameEntity.move.target.x, Contexts.sharedInstance.game.gameBoard.rows,0);
+        transform.position = new Vector3(_thisGameEntity.move.target.x, Contexts.sharedInstance.game.gameBoard.rows, 0);
+
     }
 
     public override void OnMove(GameEntity entity, IntVector2 target)
@@ -21,7 +22,7 @@ public class GameBoardElementView : View,ILoadSpriteListener
             _thisGameEntity.isMoveComplete = true;
         });
     }
-    
+
     protected override void Destroy()
     {
         var color = sprite.color;
@@ -36,4 +37,5 @@ public class GameBoardElementView : View,ILoadSpriteListener
     {
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(path);
     }
+    
 }

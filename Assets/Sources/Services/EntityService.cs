@@ -1,4 +1,6 @@
-﻿public class EntityService {
+﻿using System.Reflection.Emit;
+
+public class EntityService {
 
     public RandomService randomService = RandomService.game;
 
@@ -33,6 +35,18 @@
         entity.AddMove(new IntVector2(x, y));
         entity.AddEffectState(ItemEffctName.NONE);
         entity.AddLoadPrefab(randomService.Element(_items));
+        return entity;
+    }
+
+    public GameEntity CreatePiece(int index, int x, int y)
+    {
+        var entity = _contexts.game.CreateEntity();
+        entity.isGameBoardElement = true;
+        entity.isMovable = true;
+        entity.isInteractive = true;
+        entity.AddMove(new IntVector2(x, y));
+        entity.AddEffectState(ItemEffctName.NONE);
+        entity.AddLoadPrefab(_items[index]);
         return entity;
     }
 

@@ -8,30 +8,35 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int DebugMsg = 0;
-    public const int Destroyed = 1;
-    public const int DestroyedListener = 2;
-    public const int DetectionSameItem = 3;
-    public const int EffectState = 4;
-    public const int Eliminate = 5;
-    public const int Exchange = 6;
-    public const int GameBoard = 7;
-    public const int GameBoardElement = 8;
-    public const int GetSameColor = 9;
-    public const int Interactive = 10;
-    public const int JudgeFormation = 11;
-    public const int LoadPrefab = 12;
-    public const int LoadPrefabListener = 13;
-    public const int LoadSprite = 14;
-    public const int LoadSpriteListener = 15;
-    public const int Movable = 16;
-    public const int MoveComplete = 17;
-    public const int Move = 18;
-    public const int MoveListener = 19;
+    public const int Audio = 0;
+    public const int AudioListener = 1;
+    public const int DebugMsg = 2;
+    public const int Destroyed = 3;
+    public const int DestroyedListener = 4;
+    public const int DetectionSameItem = 5;
+    public const int EffectState = 6;
+    public const int Eliminate = 7;
+    public const int Exchange = 8;
+    public const int FallState = 9;
+    public const int GameBoard = 10;
+    public const int GameBoardElement = 11;
+    public const int GetSameColor = 12;
+    public const int Interactive = 13;
+    public const int JudgeFormation = 14;
+    public const int LoadPrefab = 15;
+    public const int LoadPrefabListener = 16;
+    public const int LoadSprite = 17;
+    public const int LoadSpriteListener = 18;
+    public const int Movable = 19;
+    public const int MoveComplete = 20;
+    public const int Move = 21;
+    public const int MoveListener = 22;
 
-    public const int TotalComponents = 20;
+    public const int TotalComponents = 23;
 
     public static readonly string[] componentNames = {
+        "Audio",
+        "AudioListener",
         "DebugMsg",
         "Destroyed",
         "DestroyedListener",
@@ -39,6 +44,7 @@ public static class GameComponentsLookup {
         "EffectState",
         "Eliminate",
         "Exchange",
+        "FallState",
         "GameBoard",
         "GameBoardElement",
         "GetSameColor",
@@ -55,6 +61,8 @@ public static class GameComponentsLookup {
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(AudioComponent),
+        typeof(AudioListenerComponent),
         typeof(DebugMsgComponent),
         typeof(DestroyedComponent),
         typeof(DestroyedListenerComponent),
@@ -62,6 +70,7 @@ public static class GameComponentsLookup {
         typeof(EffectStateComponent),
         typeof(EliminateComponent),
         typeof(ExchangeComponent),
+        typeof(FallStateComponent),
         typeof(GameBoardComponent),
         typeof(GameBoardElementComponent),
         typeof(GetSameColorComponent),

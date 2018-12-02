@@ -6,6 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface ILoadPrefabListener {
-    void OnLoadPrefab(GameEntity entity, string name);
+public interface IAudioListener {
+    void OnAudio(GameEntity entity, string path);
 }

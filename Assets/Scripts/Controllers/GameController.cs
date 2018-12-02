@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
     void Awake() {
         var contexts = Contexts.sharedInstance;
         services.Initialize(contexts, this);
+        Models.Instance.Init();
         _systems = new GameSystems(contexts);
     }
 

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public LoadPrefabComponent loadPrefab { get { return (LoadPrefabComponent)GetComponent(GameComponentsLookup.LoadPrefab); } }
-    public bool hasLoadPrefab { get { return HasComponent(GameComponentsLookup.LoadPrefab); } }
+    public FallStateComponent fallState { get { return (FallStateComponent)GetComponent(GameComponentsLookup.FallState); } }
+    public bool hasFallState { get { return HasComponent(GameComponentsLookup.FallState); } }
 
-    public void AddLoadPrefab(string newName) {
-        var index = GameComponentsLookup.LoadPrefab;
-        var component = CreateComponent<LoadPrefabComponent>(index);
-        component.name = newName;
+    public void AddFallState(FallState newState) {
+        var index = GameComponentsLookup.FallState;
+        var component = CreateComponent<FallStateComponent>(index);
+        component.state = newState;
         AddComponent(index, component);
     }
 
-    public void ReplaceLoadPrefab(string newName) {
-        var index = GameComponentsLookup.LoadPrefab;
-        var component = CreateComponent<LoadPrefabComponent>(index);
-        component.name = newName;
+    public void ReplaceFallState(FallState newState) {
+        var index = GameComponentsLookup.FallState;
+        var component = CreateComponent<FallStateComponent>(index);
+        component.state = newState;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveLoadPrefab() {
-        RemoveComponent(GameComponentsLookup.LoadPrefab);
+    public void RemoveFallState() {
+        RemoveComponent(GameComponentsLookup.FallState);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherLoadPrefab;
+    static Entitas.IMatcher<GameEntity> _matcherFallState;
 
-    public static Entitas.IMatcher<GameEntity> LoadPrefab {
+    public static Entitas.IMatcher<GameEntity> FallState {
         get {
-            if (_matcherLoadPrefab == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.LoadPrefab);
+            if (_matcherFallState == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.FallState);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherLoadPrefab = matcher;
+                _matcherFallState = matcher;
             }
 
-            return _matcherLoadPrefab;
+            return _matcherFallState;
         }
     }
 }

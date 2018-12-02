@@ -42,6 +42,7 @@ public sealed class FallSystem : ReactiveSystem<GameEntity> {
 
                 foreach (var e in movables)
                 {
+                    e.ReplaceFallState(FallState.FALL);
                     MoveDown(e, position);
                 }
             }
