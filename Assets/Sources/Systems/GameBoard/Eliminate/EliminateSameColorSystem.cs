@@ -38,7 +38,11 @@ public class EliminateSameColorSystem : ReactiveSystem<GameEntity>
                         tempEntity = Contexts.sharedInstance.game.GetEntitiesWithMove(new IntVector2(x, y))
                             .FirstOrDefault(u => u.loadPrefab.name == name);
                         if (tempEntity != null)
+                        {
+                            Debug.Log(tempEntity.loadPrefab.name+"  "+ name);
                             tempEntity.isDestroyed = true;
+                        }
+                            
                     }
                     catch (Exception)
                     {

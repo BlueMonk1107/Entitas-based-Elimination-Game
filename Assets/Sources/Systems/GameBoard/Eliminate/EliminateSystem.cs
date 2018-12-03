@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 元素消除响应系统
@@ -26,8 +27,15 @@ public class EliminateSystem : ReactiveSystem<GameEntity> {
         GameEntity temp;
         foreach (GameEntity gameEntity in entities)
         {
-            if(gameEntity.effectState.itemEffctName == ItemEffctName.NONE)
+            if (!gameEntity.isJudgeFormation)
+            {
                 sameEntities.Add(gameEntity);
+            }
+            else
+            {
+                gameEntity.isJudgeFormation = false;
+            }
+                
 
             sameEntities.AddRange(gameEntity.detectionSameItem.sameEntitiesLeft);
             sameEntities.AddRange(gameEntity.detectionSameItem.sameEntitiesRight);

@@ -24,29 +24,32 @@ public class JudgeFormationSystem : ReactiveSystem<GameEntity>
     {
         foreach (GameEntity gameEntity in entities)
         {
-            if (JudgeEliminateAll(gameEntity))
+            if (gameEntity.effectState.itemEffctName == ItemEffctName.NONE)
             {
-                gameEntity.ReplaceEffectState(ItemEffctName.ELIMINATE_SAME_COLOR);
-            }
-            else if (JudgeEliminateHorizontal(gameEntity))
-            {
-                gameEntity.ReplaceEffectState(ItemEffctName.ELIMINATE_HORIZONTAL);
-            }
-            else if (JudgeEliminateVertical(gameEntity))
-            {
-                gameEntity.ReplaceEffectState(ItemEffctName.ELIMINATE_VERTICAL);
-            }
-            else if (JudgeExplode(gameEntity))
-            {
-                gameEntity.ReplaceEffectState(ItemEffctName.EXPLODE);
+                if (JudgeEliminateAll(gameEntity))
+                {
+                    gameEntity.ReplaceEffectState(ItemEffctName.ELIMINATE_SAME_COLOR);
+                }
+                else if (JudgeEliminateHorizontal(gameEntity))
+                {
+                    gameEntity.ReplaceEffectState(ItemEffctName.ELIMINATE_HORIZONTAL);
+                }
+                else if (JudgeEliminateVertical(gameEntity))
+                {
+                    gameEntity.ReplaceEffectState(ItemEffctName.ELIMINATE_VERTICAL);
+                }
+                else if (JudgeExplode(gameEntity))
+                {
+                    gameEntity.ReplaceEffectState(ItemEffctName.EXPLODE);
+                }
             }
             else
             {
-                gameEntity.ReplaceEffectState(ItemEffctName.NONE);
+                gameEntity.isJudgeFormation = false;
             }
 
             gameEntity.ReplaceEliminate(true);
-            gameEntity.isJudgeFormation = false;
+            
         }
     }
 

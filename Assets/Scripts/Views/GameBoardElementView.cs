@@ -17,7 +17,7 @@ public class GameBoardElementView : View, ILoadSpriteListener
 
     public override void OnMove(GameEntity entity, IntVector2 target)
     {
-        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 0.3f).OnComplete(() =>
+        transform.DOLocalMove(new Vector3(target.x, target.y, 0f), 2f).OnComplete(() =>
         {
             _thisGameEntity.isMoveComplete = true;
         });
@@ -25,6 +25,7 @@ public class GameBoardElementView : View, ILoadSpriteListener
 
     protected override void Destroy()
     {
+        destroyDuration = 2;
         var color = sprite.color;
         color.a = 0f;
         sprite.material.DOColor(color, destroyDuration);
