@@ -38,7 +38,11 @@ public sealed class FillSystem : ReactiveSystem<GameEntity>
             var rowPosMin = gameBoardService.GetNextEmptyRow(position);
             for (int i = rowPosMin; i < gameBoard.rows; i++)
             {
-                entityService.CreateRandomPiece(column, i);
+                var balls = _contexts.game.GetEntitiesWithMove(new IntVector2(position.x,i)).ToArray();
+                if (balls.Length == 0)
+                {
+                    entityService.CreateRandomPiece(column, i);
+                }
             }
         }
     }
